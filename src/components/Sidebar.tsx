@@ -181,7 +181,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col bg-[#F8F8F8]">
+      <div className=" w-screen h-screen overflow-y-auto ">
         {/* Top Navigation Bar */}
         <div className="bg-[#0D6759] p-4 flex justify-between items-center">
           {/* Search Input */}
@@ -211,7 +211,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         </div>
 
         {/* Children Content */}
-        <div className="p-6">{children}</div>
+        <div className="h-full w-full ">{children}</div>
       </div>
     </div>
   );

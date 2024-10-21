@@ -170,7 +170,9 @@ const Sidebar = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 bg-white p-6"></div>
+      <div className=" bg-[#E6F2F0] p-6 h-full w-full ">
+        <h1>hello</h1>
+      </div>
     </div>
   );
 };
