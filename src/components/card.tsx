@@ -14,7 +14,7 @@ const Card: React.FC<CardProps> = ({
   icon,
 }) => {
   return (
-    <div className="bg-[#142C2B] shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out rounded-xl p-6 w-full max-w-xs mx-auto transform hover:-translate-y-1 hover:scale-105">
+    <div className="bg-[#142C2B] shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out rounded-xl p-6 w-full max-w-xs mx-auto ">
       <div className="flex items-center justify-center mb-4">
         <img
           src={icon}
@@ -29,7 +29,7 @@ const Card: React.FC<CardProps> = ({
       <div className="text-center">
         <button className="text-white font-semibold flex items-center justify-center group hover:underline">
           {actionText}
-          <span className="ml-2 transform transition-transform group-hover:translate-x-1">
+          <span className="ml-2 ">
             →
           </span>
         </button>
