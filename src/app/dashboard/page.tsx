@@ -3,6 +3,8 @@ import Card from "../../components/card";
 import Sidebar from "../../components/Sidebar";
 
 const Dashboard = () => {
+  console.log("change dashboard");
+  
   return (
     <Sidebar>
       <div className="flex justify-start">
