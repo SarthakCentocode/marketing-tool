@@ -4,15 +4,15 @@ import React, { useState } from "react";
 interface CardProps {
   title: string;
   description: string;
-  actionText: string;
-  icon: string;
+  badgeText: string;
+  button: string;
 }
 
 const Card: React.FC<CardProps> = ({
   title,
   description,
-  actionText,
-  icon,
+  badgeText,
+  button,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -32,27 +32,25 @@ const Card: React.FC<CardProps> = ({
 
   return (
     <div>
-      <div className="bg-[#142C2B] shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out rounded-xl p-6 w-full max-w-xs mx-auto transform hover:-translate-y-1 hover:scale-105">
-        <div className="flex items-center justify-center mb-4">
-          <img
-            src={icon}
-            alt={title}
-            className="w-16 h-16 rounded-full border-2 border-gray-200 p-2 bg-gray-50 shadow-sm"
-          />
+      <div className="bg-[#FFFFFF]  shadow-lg hover:shadow-xl transition-shadow rounded-xl p-6 w-full max-w-xs mx-auto ">
+        <div className="flex items-center justify-between">
+          <h4 className="text-[16px]">{title}</h4>
+          <div className=" bg-[#00806933] px-4 py-1 rounded-sm">
+            <h4 className="text-[#008069] text-[10px] ">{badgeText}</h4>
+          </div>
         </div>
         <h3 className="text-xl font-bold text-white mb-2 text-center">
           {title}
         </h3>
-        <p className="text-white text-center mb-6">{description}</p>
-        <div className="text-center">
+        <p className="text-justify mb-6 text-[16px] text-[#888282]">
+          {description}
+        </p>
+        <div>
           <button
             onClick={handleOpenModal}
-            className="text-white font-semibold flex items-center justify-center group hover:underline"
+            className="text-[#008069] text-[10px] font-[600] py-1 px-3 border-2 border-[#008069] rounded-md"
           >
-            {actionText}
-            <span className="ml-2 transform transition-transform group-hover:translate-x-1">
-              →
-            </span>
+            {button}
           </button>
         </div>
       </div>
@@ -65,7 +63,7 @@ const Card: React.FC<CardProps> = ({
               WhatsApp Marketing Message
             </h2>
             <p className="mb-4">
-              Hey there! 🚀 Want to boost your sales with automated WhatsApp
+              Hey there!Want to boost your sales with automated WhatsApp
               marketing? Our platform helps you send personalized messages to
               your audience and drive engagement. Get started now and see the
               difference!
