@@ -2,7 +2,26 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { FiMenu, FiSearch } from "react-icons/fi"; // For menu and search icons
+import { FiMenu, FiSearch } from "react-icons/fi";
+import home from "@/public/home.svg";
+import template from "@/public/template.svg";
+import task from "@/public/task.svg";
+import Image from "next/image";
+import calender from "@/public/calender.svg";
+import team from "@/public/team.svg";
+import message from "@/public/message.svg";
+import file from "@/public/file.svg";
+import report from "@/public/report.svg";
+import help from "@/public/help.svg";
+import {
+  FaTasks,
+  FaCalendarAlt,
+  FaUsers,
+  FaEnvelope,
+  FaFileAlt,
+  FaChartBar,
+  FaQuestionCircle,
+} from "react-icons/fa"; // Example icons
 
 type SidebarProps = {
   children: React.ReactNode;
@@ -24,164 +43,147 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
     <div className="flex">
       {/* Sidebar */}
       <div
-        className={`bg-[#142C2B] text-white h-screen p-5 pt-8 ${
+        className={`bg-[#fdfdfd] text-white h-screen p-5 pt-8 ${
           isOpen ? "w-64" : "w-20"
         } duration-300 relative`}
       >
         {/* Toggle Button */}
         <button
           onClick={toggleSidebar}
-          className="absolute top-5 right-5 text-white text-2xl"
+          className="absolute top-5 right-5 text-black text-2xl"
         >
           <FiMenu />
         </button>
 
         {/* Sidebar Links */}
-        <div
-          className={`flex flex-col mt-10 ${
-            isOpen ? "space-y-6" : "space-y-4"
-          }`}
-        >
+        <div className="flex flex-col mt-10 space-y-6">
           <Link
             href="/dashboard"
-            className="hover:bg-gray-700 py-2 px-3 rounded-md"
+            className={`flex items-center text-[#145E54] hover:bg-[#145E54] hover:text-white ${
+              isOpen && "py-3 px-3"
+            } rounded-md`}
           >
+            <Image src={home} alt="Home" width={24} height={24}></Image>
             <span
-              className={`${
+              className={`ml-4 ${
                 isOpen ? "inline-block" : "hidden"
               } transition-all duration-200`}
             >
               Dashboard
             </span>
-            <span
-              className={`${
-                !isOpen ? "block text-center" : "hidden"
-              } transition-all duration-200`}
-            >
-              D
-            </span>
           </Link>
           <Link
-            href="/livechat"
-            className="hover:bg-gray-700 py-2 px-3 rounded-md"
+            href="/tasks"
+            className={`flex items-center text-[#145E54] hover:bg-[#145E54] hover:text-white ${
+              isOpen && "py-3 px-3"
+            } rounded-md`}
           >
+            <Image src={template} alt="Home" width={24} height={24}></Image>
             <span
-              className={`${
+              className={`ml-4 ${
                 isOpen ? "inline-block" : "hidden"
               } transition-all duration-200`}
             >
-              Live Chat
-            </span>
-            <span
-              className={`${
-                !isOpen ? "block text-center" : "hidden"
-              } transition-all duration-200`}
-            >
-              L
+              Templates
             </span>
           </Link>
           <Link
-            href="/history"
-            className="hover:bg-gray-700 py-2 px-3 rounded-md"
+            href="/calendar"
+            className={`flex items-center text-[#145E54] hover:bg-[#145E54] hover:text-white ${
+              isOpen && "py-3 px-3"
+            } rounded-md`}
           >
+            <Image src={calender} alt="Home" width={24} height={24}></Image>
             <span
-              className={`${
+              className={`ml-4 ${
                 isOpen ? "inline-block" : "hidden"
               } transition-all duration-200`}
             >
-              History
-            </span>
-            <span
-              className={`${
-                !isOpen ? "block text-center" : "hidden"
-              } transition-all duration-200`}
-            >
-              H
+              Calendar
             </span>
           </Link>
           <Link
-            href="/contacts"
-            className="hover:bg-gray-700 py-2 px-3 rounded-md"
+            href="/team"
+            className={`flex items-center text-[#145E54] hover:bg-[#145E54] hover:text-white ${
+              isOpen && "py-3 px-3"
+            } rounded-md`}
           >
+            <Image src={team} alt="Home" width={24} height={24}></Image>
             <span
-              className={`${
+              className={`ml-4 ${
                 isOpen ? "inline-block" : "hidden"
               } transition-all duration-200`}
             >
-              Contacts
-            </span>
-            <span
-              className={`${
-                !isOpen ? "block text-center" : "hidden"
-              } transition-all duration-200`}
-            >
-              C
+              Team
             </span>
           </Link>
           <Link
-            href="/campaigns"
-            className="hover:bg-gray-700 py-2 px-3 rounded-md"
+            href="/messages"
+            className={`flex items-center text-[#145E54] hover:bg-[#145E54] hover:text-white ${
+              isOpen && "py-3 px-3"
+            } rounded-md`}
           >
+            <Image src={message} alt="Home" width={24} height={24}></Image>
             <span
-              className={`${
+              className={`ml-4 ${
                 isOpen ? "inline-block" : "hidden"
               } transition-all duration-200`}
             >
-              Campaigns
-            </span>
-            <span
-              className={`${
-                !isOpen ? "block text-center" : "hidden"
-              } transition-all duration-200`}
-            >
-              M
+              Messages
             </span>
           </Link>
           <Link
-            href="/manage"
-            className="hover:bg-gray-700 py-2 px-3 rounded-md"
+            href="/files"
+            className={`flex items-center text-[#145E54] hover:bg-[#145E54] hover:text-white ${
+              isOpen && "py-3 px-3"
+            } rounded-md`}
           >
+            <Image src={file} alt="Home" width={24} height={24}></Image>
             <span
-              className={`${
+              className={`ml-4 ${
                 isOpen ? "inline-block" : "hidden"
               } transition-all duration-200`}
             >
-              Manage
-            </span>
-            <span
-              className={`${
-                !isOpen ? "block text-center" : "hidden"
-              } transition-all duration-200`}
-            >
-              M
+              Files
             </span>
           </Link>
           <Link
-            href="/integrations"
-            className="hover:bg-gray-700 py-2 px-3 rounded-md"
+            href="/reports"
+            className={`flex items-center text-[#145E54] hover:bg-[#145E54] hover:text-white ${
+              isOpen && "py-3 px-3"
+            } rounded-md`}
           >
+            <Image src={report} alt="Home" width={24} height={24}></Image>
             <span
-              className={`${
+              className={`ml-4 ${
+                isOpen ? "inline-block" : "hidden"
+              } transition-all duration-200 text-[15px]`}
+            >
+              Reports
+            </span>
+          </Link>
+          <Link
+            href="/help-support"
+            className={`flex items-center text-[#145E54] hover:bg-[#145E54] hover:text-white ${
+              isOpen && "py-3 px-3"
+            } rounded-md`}
+          >
+            <Image src={help} alt="Home" width={24} height={24}></Image>
+            <span
+              className={`ml-4 ${
                 isOpen ? "inline-block" : "hidden"
               } transition-all duration-200`}
             >
-              Integrations
-            </span>
-            <span
-              className={`${
-                !isOpen ? "block text-center" : "hidden"
-              } transition-all duration-200`}
-            >
-              I
+              Help & Support
             </span>
           </Link>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col bg-white">
+      <div className="flex-1 flex flex-col bg-[#F8F8F8]">
         {/* Top Navigation Bar */}
-        <div className="bg-[#142C2B] p-4 flex justify-between items-center">
+        <div className="bg-[#0D6759] p-4 flex justify-between items-center">
           {/* Search Input */}
           <div className="relative">
             <input
@@ -194,12 +196,15 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
             <FiSearch className="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-500" />
           </div>
 
-          {/* Profile/Settings or Other Links */}
+          {/* Profile/Settings Links */}
           <div className="space-x-4">
             <Link href="/profile" className="text-gray-200 hover:text-gray-400">
               Profile
             </Link>
-            <Link href="/settings" className="text-gray-200 hover:text-gray-400">
+            <Link
+              href="/settings"
+              className="text-gray-200 hover:text-gray-400"
+            >
               Settings
             </Link>
           </div>
