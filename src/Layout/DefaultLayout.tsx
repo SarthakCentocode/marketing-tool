@@ -170,7 +170,9 @@ const Sidebar = () => {
       </div>
 
       {/* Main Content */}
-      
+      <div className=" bg-[#E6F2F0] p-6 h-full w-full ">
+        <h1>hello</h1>
+      </div>
     </div>
   );
 };
