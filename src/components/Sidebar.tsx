@@ -196,10 +196,10 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
 
           {/* Profile/Settings or Other Links */}
           <div className="space-x-4">
-            <Link href="/profile" className="text-gray-700 hover:text-">
+            <Link href="/profile" className="text-gray-200 hover:text-gray-400">
               Profile
             </Link>
-            <Link href="/settings" className="text-gray-700 hover:text-black">
+            <Link href="/settings" className="text-gray-200 hover:text-gray-400">
               Settings
             </Link>
           </div>
