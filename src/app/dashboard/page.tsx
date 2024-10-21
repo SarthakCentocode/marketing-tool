@@ -3,12 +3,12 @@ import Card from "../../components/card";
 import Sidebar from "../../components/Sidebar";
 
 const Dashboard = () => {
-  console.log("change ");
+  console.log("change dashboard");
 
   return (
-    <Sidebar>
-      <></>
-    </Sidebar>
+    <>
+    <h1>hello</h1>
+    </>
   );
 };
 
