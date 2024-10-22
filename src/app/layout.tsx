@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased`}>
+      <body >
         <Sidebar>{children}</Sidebar>
       </body>
     </html>
