@@ -89,35 +89,39 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex h-screen relative ">
       <div
-        className={`bg-[#fdfdfd] text-white h-screen p-5 pt-8 ${
-          isOpen ? "w-64" : "w-20"
-        } duration-300 relative`}
+        className={`bg-[#fdfdfd] text-white  p-5 pt-8 ${
+          isOpen ? "w-[20%]" : "w-[5%]"
+        } duration-300 fixed z-10 top-0 left-0 h-full `}
       >
-        <button
-          onClick={toggleSidebar}
-          className="absolute top-5 right-8 text-[#145E54] text-2xl"
-        >
-          {/* Toggle between FiMenu and FiChevronLeft */}
-          {isOpen ? <FiChevronLeft /> : <FiMenu />}
-        </button>
+        <div className="flex justify-between items-center mb-8">
+          {isOpen && (
+            <div className="rounded-sm h-[48px] w-[48px] bg-[#EFEBFA]"></div>
+          )}
+          <button
+            onClick={toggleSidebar}
+            className="  text-[#145E54] text-[15px]"
+          >
+            {isOpen ? <FiChevronLeft /> : <FiMenu />}
+          </button>
+        </div>
 
-        <div className="flex flex-col mt-10 space-y-6">
+        <div className="flex flex-col mb-6 overflow-y-auto space-y-6">
           {navigation.map((item) => (
             <Link
               key={item.name}
               href={item.route}
               onClick={() => setSelectedRoute(item.route)}
               className={`flex items-center text-[15px] text-[#145E54] hover:bg-[#145E54] hover:text-white ${
-                isOpen && "py-3 px-3"
+                isOpen && "p-2"
               } rounded-md ${
                 selectedRoute === item.route ? "bg-[#E6F5F2]" : ""
               }`}
             >
               <Image src={item.icon} alt={item.name} width={24} height={24} />
               <span
-                className={`ml-4 ${
+                className={`ml-2 ${
                   isOpen ? "inline-block" : "hidden"
                 } transition-all duration-200`}
               >
@@ -128,9 +132,9 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         </div>
       </div>
 
-      <div className=" w-screen h-screen overflow-y-auto ">
-        <div className="bg-[#0D6759] p-2">
-          <div className=" flex justify-end items-center">
+      <div className={`relative ${isOpen ? "ms-[20%]" : "ms-[5%]"}`}>
+        <div className="bg-[#0D6759] p-2 sticky top-0 w-">
+          <div className=" flex justify-end items-center overflow-y-auto">
             <div className="relative">
               <input
                 type="text"
@@ -147,7 +151,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
           </div>
         </div>
 
-        <div className="h-full w-full ">{children}</div>
+        <div className="h-full w-full overflow-y">{children}</div>
       </div>
     </div>
   );
