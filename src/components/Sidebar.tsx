@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { FiMenu, FiChevronLeft, FiSearch } from "react-icons/fi"; // Import the new arrow icon
+import { FiMenu, FiChevronLeft } from "react-icons/fi";
 import Image from "next/image";
 import home from "@/public/home.svg";
 import template from "@/public/template.svg";
@@ -19,54 +19,24 @@ type SidebarProps = {
 };
 
 const navigation = [
-  {
-    headline: "Home",
-    name: "dashboard",
-    route: "/dashboard",
-    icon: home,
-  },
+  { headline: "Home", name: "dashboard", route: "/dashboard", icon: home },
   {
     headline: "Templates",
     name: "Template Library",
     route: "/templates",
     icon: template,
   },
-  {
-    headline: "Tasks",
-    name: "Tasks",
-    route: "/tasks",
-    icon: task,
-  },
+  { headline: "Tasks", name: "Tasks", route: "/tasks", icon: task },
   {
     headline: "Calendar",
     name: "Calendar",
     route: "/calendar",
     icon: calender,
   },
-  {
-    headline: "Team",
-    name: "Team",
-    route: "/team",
-    icon: team,
-  },
-  {
-    headline: "Messages",
-    name: "Messages",
-    route: "/messages",
-    icon: message,
-  },
-  {
-    headline: "Files",
-    name: "Files",
-    route: "/files",
-    icon: file,
-  },
-  {
-    headline: "Reports",
-    name: "Reports",
-    route: "/reports",
-    icon: report,
-  },
+  { headline: "Team", name: "Team", route: "/team", icon: team },
+  { headline: "Messages", name: "Messages", route: "/messages", icon: message },
+  { headline: "Files", name: "Files", route: "/files", icon: file },
+  { headline: "Reports", name: "Reports", route: "/reports", icon: report },
   {
     headline: "Help & Support",
     name: "Help and Support",
@@ -77,32 +47,36 @@ const navigation = [
 
 const Sidebar: React.FC<SidebarProps> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
   const [selectedRoute, setSelectedRoute] = useState("/dashboard");
+  const [pageTitle, setPageTitle] = useState("Home");
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-  };
+  useEffect(() => {
+    const currentNavItem = navigation.find(
+      (item) => item.route === selectedRoute
+    );
+    if (currentNavItem) setPageTitle(currentNavItem.headline);
+  }, [selectedRoute]);
 
   return (
-    <div className="flex h-screen relative ">
+    <div className="flex h-screen relative">
+      {/* Sidebar */}
       <div
-        className={`bg-[#fdfdfd] text-white  p-5 pt-8 ${
+        className={`bg-[#E6F2F0] text-white p-5 ${
           isOpen ? "w-[20%]" : "w-[5%]"
-        } duration-300 fixed z-10 top-0 left-0 h-full `}
+        } 
+        duration-200 fixed z-10 top-0 left-0 h-full`}
       >
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex justify-between items-center mb-8 text-black text-[15px] font-bold">
           {isOpen && (
             <div className="rounded-sm h-[48px] w-[48px] bg-[#EFEBFA]"></div>
           )}
-          <button
-            onClick={toggleSidebar}
-            className="  text-[#145E54] text-[15px]"
-          >
+          {isOpen && <div className="text-[#0D6759]">Wabuzz</div>}
+
+          <button onClick={toggleSidebar} className="text-[#145E54] text-2xl">
             {isOpen ? <FiChevronLeft /> : <FiMenu />}
           </button>
         </div>
@@ -113,11 +87,9 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
               key={item.name}
               href={item.route}
               onClick={() => setSelectedRoute(item.route)}
-              className={`flex items-center text-[15px] text-[#145E54] hover:bg-[#145E54] hover:text-white ${
-                isOpen && "p-2"
-              } rounded-md ${
-                selectedRoute === item.route ? "bg-[#E6F5F2]" : ""
-              }`}
+              className={`flex items-center text-[15px] text-[#145E54] hover:bg-[#145E54] 
+              hover:text-white ${isOpen && "py-1 px-2"} rounded-md 
+              ${selectedRoute === item.route ? "bg-[#E6F5F2]" : ""}`}
             >
               <Image src={item.icon} alt={item.name} width={24} height={24} />
               <span
@@ -132,26 +104,17 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         </div>
       </div>
 
+      {/* Main Content */}
       <div className={`relative ${isOpen ? "ms-[20%]" : "ms-[5%]"}`}>
-        <div className="bg-[#0D6759] p-2 sticky top-0 w-">
-          <div className=" flex justify-end items-center overflow-y-auto">
-            <div className="relative">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={handleSearchChange}
-                placeholder="Search..."
-                className="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-green-500"
-              />
-              <FiSearch className="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-500" />
-            </div>
-            <button className=" ms-2 border-[1px] border-white px-2 py-1 text-white rounded-sm ">
-              Add New
-            </button>
-          </div>
+        {/* Top Bar */}
+        <div className="bg-[#0D6759] p-2 sticky top-0 w-full h-14 text-white px-4 font-bold">
+          {pageTitle}
         </div>
 
-        <div className="h-full w-full overflow-y">{children}</div>
+        {/* Content Area */}
+        <div className="h-full w-full overflow-y-auto p-4 bg-[#E6F5F2]">
+          {children}
+        </div>
       </div>
     </div>
   );
