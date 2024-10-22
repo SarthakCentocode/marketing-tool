@@ -14,7 +14,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+<<<<<<< Updated upstream
       <body >
+=======
+      <body className={`antialiased`}>
+>>>>>>> Stashed changes
         <Sidebar>{children}</Sidebar>
       </body>
     </html>
