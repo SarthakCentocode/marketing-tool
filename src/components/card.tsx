@@ -1,5 +1,18 @@
 "use client";
+import { Box, Modal, Typography } from "@mui/material";
 import React, { useState } from "react";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  borderRadius: 5,
+  boxShadow: 24,
+  p: 4,
+};
 
 interface CardProps {
   title: string;
@@ -32,7 +45,7 @@ const Card: React.FC<CardProps> = ({
 
   return (
     <div>
-      <div className="bg-[#FFFFFF]  shadow-lg hover:shadow-xl transition-shadow rounded-xl p-6 w-full max-w-xs mx-auto ">
+      <div className="bg-[#FFFFFF]  border-[1px] border-[#CDE7E2] hover:shadow-xl transition-shadow rounded-xl p-6 w-full max-w-xs mx-auto ">
         <div className="flex items-center justify-between">
           <h4 className="text-[16px]">{title}</h4>
           <div className=" bg-[#00806933] px-4 py-1 rounded-sm">
@@ -56,35 +69,41 @@ const Card: React.FC<CardProps> = ({
       </div>
 
       {/* Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md mx-auto">
-            <h2 className="text-xl font-bold mb-4">
-              WhatsApp Marketing Message
-            </h2>
-            <p className="mb-4">
-              Hey there!Want to boost your sales with automated WhatsApp
-              marketing? Our platform helps you send personalized messages to
-              your audience and drive engagement. Get started now and see the
-              difference!
-            </p>
-            <div className="flex justify-between">
+      <Modal
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        BackdropProps={{
+          sx: {
+            backdropFilter: "blur(3px)", // This applies the blur effect
+            backgroundColor: "rgba(0, 0, 0, 0.5)", // Adds a semi-transparent background
+          },
+        }}
+      >
+        <Box sx={{ ...style }}>
+          <div className="flex flex-col justify-between items-center">
+            <h2 className="text-xl font-bold mb-4">Preview</h2>
+            <div className=" w-full h-96 bg-gray-400 rounded-lg" />
+
+            <div className="flex justify-between w-full gap-3   items-center mt-4">
               <button
                 onClick={handleCloseModal}
-                className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition"
+                className="bg font-[500] px-4 py-2 rounded-md border-[1px] border-[#D0D5DD]
+                text-[#344054] w-full"
               >
-                Close
+                Cancel
               </button>
               <button
                 onClick={handleProceed}
-                className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition"
+                className="bg-[#008069] font-[500] text-white px-4 py-2 rounded-md w-full"
               >
-                Proceed
+                Submit
               </button>
             </div>
           </div>
-        </div>
-      )}
+        </Box>
+      </Modal>
     </div>
   );
 };

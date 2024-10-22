@@ -98,28 +98,7 @@ export default function StickyHeadTable() {
   return (
     <div className="w-[100%]">
 
-      <div className=" flex justify-between items-center my-10 ">
-        <div>
-          <h1 className="text-[24px] font-[600] text-[#008069]">My Template</h1>
-        </div>
-        <div className="flex space-x-2">
-          <div className=" flex justify-end items-center overflow-y-auto">
-            <div className="relative">
-              <input
-                type="text"
-                // value={searchQuery}
-                // onChange={handleSearchChange}
-                placeholder="Search..."
-                className="w-[343px] pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-green-500"
-              />
-              <FiSearch className="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-500" />
-            </div>
-            <button className=" ms-2 border-[1px] bg-[#0D6759] px-4 h-full text-white rounded-sm ">
-              All
-            </button>
-          </div>
-        </div>{" "}
-      </div>
+      
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
         <TableContainer sx={{ maxHeight: 440, width: "100%" }}>
           <Table stickyHeader aria-label="sticky table">
