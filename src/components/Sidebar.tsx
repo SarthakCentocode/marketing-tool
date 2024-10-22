@@ -132,6 +132,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         </div>
       </div>
 
+<<<<<<< Updated upstream
       <div className={`relative ${isOpen ? "ms-[20%]" : "ms-[5%]"}`}>
         <div className="bg-[#0D6759] p-2 sticky top-0 w-">
           <div className=" flex justify-end items-center overflow-y-auto">
@@ -152,6 +153,37 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         </div>
 
         <div className="h-full w-full overflow-y">{children}</div>
+=======
+      {/* Main Content */}
+      <div className=" w-screen h-screen overflow-y-auto ">
+        {/* Top Navigation Bar */}
+        <div className="bg-[#142C2B] p-4 flex justify-between items-center">
+          {/* Search Input */}
+          <div className="relative">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              placeholder="Search..."
+              className="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
+            />
+            <FiSearch className="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-500" />
+          </div>
+
+          {/* Profile/Settings or Other Links */}
+          <div className="space-x-4">
+            <Link href="/profile" className="text-gray-200 hover:text-gray-400">
+              Profile
+            </Link>
+            <Link href="/settings" className="text-gray-200 hover:text-gray-400">
+              Settings
+            </Link>
+          </div>
+        </div>
+
+        {/* Children Content */}
+        <div className="h-full w-full ">{children}</div>
+>>>>>>> Stashed changes
       </div>
     </div>
   );
