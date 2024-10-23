@@ -8,16 +8,22 @@ import { FiSearch } from "react-icons/fi";
 export default function Templates() {
   const [isTab, setTab] = useState(0);
 
+  const handleMyTemplates = () => {
+    setTab(1);
+  };
+  const handleTemplates = () => {
+    setTab(0);
+  };
   return (
     <>
-      <div className=" bg-[#E6F2F0] h-full w-full p-6">
+      <div className=" bg-[#ffffff] h-full w-full p-6">
         <div className="my-8 flex justify-between items-center ">
-          <div className=" bg-white  gap-2 flex justify-around items-center border-2 border-[#008069] py-1 px-1 rounded-md">
+          <div className=" bg-white  gap-2 flex justify-around items-center border-[1px] border-[#008069] p-[1.5px]  rounded-md">
             <button
               className={`px-5   rounded-md py-2  text-[16px] text-[600]  ${
                 isTab === 0 && "bg-[#008069] text-white"
               }`}
-              onClick={() => setTab(0)}
+              onClick={handleTemplates}
             >
               Template Library
             </button>
@@ -26,7 +32,7 @@ export default function Templates() {
               className={`px-5   rounded-md py-2  text-[16px] text-[600]  ${
                 isTab === 1 && "bg-[#008069] text-white"
               }`}
-              onClick={() => setTab(1)}
+              onClick={handleMyTemplates}
             >
               My Templates
             </button>
