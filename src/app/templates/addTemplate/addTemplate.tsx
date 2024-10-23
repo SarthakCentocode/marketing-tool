@@ -22,13 +22,13 @@ const AddTemplate = () => {
           {/* Left Column */}
 
           <div className="space-y-3">
-            <h4 className="text-lg font-medium">Template Preview</h4>
+            <h4 className="text-lg font-medium ">Template Preview</h4>
             <h5 className="text-sm font-light text-gray-400">Lorem Ipsum is simply dummy text of the printing and type </h5>
             <TextField
               fullWidth
-              label=""
+              label="Choose Catagory"
               select
-              helperText="Choose a category"
+             className="border-[#008069]"
               variant="outlined"
             >
               <MenuItem value="Category 1">Category 1</MenuItem>
