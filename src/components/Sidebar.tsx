@@ -130,7 +130,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import Image from "next/image";
 import { FiMenu, FiChevronLeft } from "react-icons/fi";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 import home from "@/public/home.svg";
@@ -144,56 +144,32 @@ import report from "@/public/report.svg";
 import help from "@/public/help.svg";
 
 const sliderData = [
-  { headline: "Home", name: "dashboard", route: "/dashboard", icon: home },
-  {
-    headline: "Templates",
-    name: "Template Library",
-    route: "/templates",
-    icon: template,
-  },
-  { headline: "Tasks", name: "Tasks", route: "/tasks", icon: task },
-  {
-    headline: "Calendar",
-    name: "Calendar",
-    route: "/calendar",
-    icon: calender,
-  },
-  { headline: "Team", name: "Team", route: "/team", icon: team },
-
-  { headline: "Messages", name: "Messages", route: "/messages", icon: message },
-
-  { headline: "Files", name: "Files", route: "/files", icon: file },
-  { headline: "Reports", name: "Reports", route: "/reports", icon: report },
-  {
-    headline: "Help & Support",
-    name: "Help and Support",
-    route: "/help-support",
-    icon: help,
-  },
+  { headline: "Home", route: "/dashboard", icon: home },
+  { headline: "Templates", route: "/templates", icon: template },
+  { headline: "Tasks", route: "/tasks", icon: task },
+  { headline: "Calendar", route: "/calendar", icon: calender },
+  { headline: "Team", route: "/team", icon: team },
+  { headline: "Messages", route: "/messages", icon: message },
+  { headline: "Files", route: "/files", icon: file },
+  { headline: "Reports", route: "/reports", icon: report },
+  { headline: "Help & Support", route: "/help-support", icon: help },
 ];
+
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const route = useRouter();
-
-  const pathName = usePathname();
-
-  const pathComponents = pathName.split("/").filter(Boolean);
-  const [pageTitle, setPageTitle] = useState("Home");
-
-  // const isActive = (path: string) => path === pathName;
-
+  const pathName = usePathname(); // Get current path
   const [open, setOpen] = useState(false);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
+  const handleDrawerOpen = () => setOpen(true);
+  const handleDrawerClose = () => setOpen(false);
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  // Find the current page title based on the route
+  const currentPageTitle =
+    sliderData.find((item) => pathName.startsWith(item.route))?.headline ||
+    "Dashboard";
 
   return (
     <div>
@@ -219,12 +195,13 @@ export default function DashboardLayout({
             },
           }}
         >
+          {/* Sidebar */}
           <Box
             sx={{
               width: open ? "15%" : "6%",
               borderRightWidth: 1.5,
               pt: {
-                xl: "10rem",
+                xl: "1.5rem",
                 lg: "1rem",
                 md: "8rem",
                 sm: "6rem",
@@ -235,10 +212,11 @@ export default function DashboardLayout({
               height: "100%",
               position: "fixed",
               left: 0,
-              // bgcolor:  ? mainBackground : "white",
+              backgroundColor: "#E6F2F0",
             }}
           >
-            <div className="  top-0  left-0 right-0 ">
+            <div className="top-0 left-0 right-0">
+              {/* Drawer Toggle */}
               <Box
                 sx={{
                   display: "flex",
@@ -248,14 +226,10 @@ export default function DashboardLayout({
               >
                 {!open ? (
                   <IconButton onClick={handleDrawerOpen}>
-                    {open ? (
-                      <FiChevronLeft className="text-black" />
-                    ) : (
-                      <FiMenu className="" />
-                    )}
+                    <FiMenu />
                   </IconButton>
                 ) : (
-                  <div className="flex justify-between items-center w-full ">
+                  <div className="flex justify-between items-center w-full">
                     <Typography
                       sx={{
                         marginLeft: {
@@ -269,10 +243,14 @@ export default function DashboardLayout({
                     >
                       WaBuzz
                     </Typography>
-                    <IconButton onClick={handleDrawerClose}></IconButton>
+                    <IconButton onClick={handleDrawerClose}>
+                      <FiChevronLeft />
+                    </IconButton>
                   </div>
                 )}
               </Box>
+
+              {/* Sidebar Menu Items */}
               <Box
                 sx={{
                   display: "flex",
@@ -284,73 +262,34 @@ export default function DashboardLayout({
                   <ListItem
                     key={index}
                     disablePadding
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      px: !open ? "20%" : "10%",
-                    }}
+                    sx={{ px: !open ? "20%" : "10%" }}
                   >
-                    <Link href={item.route} className="w-full ">
+                    <Link href={item.route} className="w-full">
                       <Tooltip
+                        title={!open ? item.headline : ""}
+                        placement="right"
                         componentsProps={{
                           tooltip: {
-                            sx: {
-                              fontSize: {
-                                xl: "0.8rem",
-                                lg: "0.5rem",
-                                md: "0.4rem",
-                                sm: "0.4rem",
-                                xs: "0.4rem",
-                              },
-                              padding: "1rem",
-                              maxWidth: "none",
-                            },
-                          },
-                          popper: {
-                            sx: {
-                              ".MuiTooltip-tooltip": {
-                                fontSize: {
-                                  xl: "1rem",
-                                  lg: "0.8rem",
-                                  md: "0.4rem",
-                                  sm: "0.4rem",
-                                  xs: "0.4rem",
-                                },
-                                padding: "1rem",
-                              },
-                            },
+                            sx: { fontSize: "0.8rem", padding: "1rem" },
                           },
                         }}
-                        title={!open ? item.headline : null}
-                        placement="right"
                       >
                         <ListItemButton
                           sx={{
                             justifyContent: open ? "initial" : "center",
                             my: "3%",
-                            borderRadius: open ? "15px" : "8px",
-                            bgcolor:
-                              item.route === pathComponents[0]
-                                ? "#008069"
-                                : null,
-                            "&:hover": {
-                              bgcolor:
-                                item.name !== pathComponents[0]
-                                  ? "#E6F2F0"
-                                  : "#E6F2F0",
-                            },
+                            borderRadius: open ? "8px" : "8px",
+                            backgroundColor: pathName.startsWith(item.route)
+                              ? "#FFFFFF"
+                              : "transparent",
+                            "&:hover": { backgroundColor: "#FFFFFF" },
                           }}
                         >
                           <ListItemIcon
                             sx={{
                               minWidth: 0,
-                              // mr: "auto",
                               justifyContent: "center",
-                              width: {
-                                xl: "2.5rem",
-                                lg: "2rem",
-                                md: "1.5rem",
-                              },
+                              width: { xl: "2.5rem", lg: "2rem", md: "1.5rem" },
                               height: {
                                 xl: "2.5rem",
                                 lg: "2rem",
@@ -365,11 +304,7 @@ export default function DashboardLayout({
                           </ListItemIcon>
 
                           {open && (
-                            <Typography
-                              sx={{
-                                marginLeft: "5%",
-                              }}
-                            >
+                            <Typography sx={{ marginLeft: "5%" }}>
                               {item.headline}
                             </Typography>
                           )}
@@ -381,31 +316,41 @@ export default function DashboardLayout({
               </Box>
             </div>
           </Box>
-          <Box
-            sx={{
-              width: "100%",
-              marginLeft: !open ? "6%" : "15%",
-              position: "relative",
-            }}
-          >
+
+          {/* Main Content */}
+          <Box sx={{ width: "100%", marginLeft: !open ? "6%" : "15%" }}>
+            {/* Top Bar with Dynamic Title */}
             <Box
               sx={{
-                backgroundColor: "#008069",
+                backgroundColor: "#FFFFFF",
                 width: "100%",
-                height: "5%",
+                height: "7%",
                 position: "fixed",
                 top: 0,
                 zIndex: 999,
                 padding: "2%",
-              }}
-            />
-            <Box
-              sx={{
-                height: "100%",
-                pt: { xl: "0%", lg: "3%", md: "4%", sm: "3%", xs: "2%" },
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "left",
               }}
             >
-              {children}
+              <Typography className="left-0 text-[#008069] font-semibold text-[20px]">
+                {currentPageTitle}
+              </Typography>
+            </Box>
+
+            <Box
+              sx={{
+                height: "100vh", 
+                pt: { xl: "0%", lg: "3%", md: "4%", sm: "3%", xs: "2%" },
+                backgroundColor: "#E6F2F0", 
+               
+              }}
+            >
+              <Box sx={{ flexGrow: 1 }}>
+                {children}{" "}
+               
+              </Box>
             </Box>
           </Box>
         </Box>
