@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import { FiSearch } from "react-icons/fi";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import { log } from "console";
 
 interface Column {
   id:
