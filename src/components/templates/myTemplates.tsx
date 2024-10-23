@@ -43,7 +43,7 @@ const columns: readonly Column[] = [
   {
     id: "type",
     label: "Type",
-    minWidth: 70,
+    minWidth: 170,
     align: "center",
     format: (value: number) => value.toLocaleString("en-US"),
   },
