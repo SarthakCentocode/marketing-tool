@@ -343,7 +343,7 @@ export default function DashboardLayout({
               sx={{
                 height: "100vh", 
                 pt: { xl: "0%", lg: "3%", md: "4%", sm: "3%", xs: "2%" },
-                backgroundColor: "#E6F2F0", 
+                backgroundColor: "#FFFFFF", 
                
               }}
             >

@@ -8,36 +8,62 @@ import {
   TableCell,
   TableBody,
   TablePagination,
+  Box,
+  Typography,
 } from "@mui/material";
 import { FiSearch } from "react-icons/fi";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import { log } from "console";
+
 interface Column {
-  id: "name" | "code" | "population" | "size" | "density";
+  id:
+    | "name"
+    | "category"
+    | "status"
+    | "type"
+    | "quality"
+    | "created_on"
+    | "action";
   label: string;
   minWidth?: number;
-  align?: "right";
+  align?: "right" | "left" | "center";
   format?: (value: number) => string;
 }
 
 const columns: readonly Column[] = [
   { id: "name", label: "Name", minWidth: 170 },
-  { id: "code", label: "ISO\u00a0Code", minWidth: 100 },
+  { id: "category", label: "Category", minWidth: 100 },
   {
-    id: "population",
-    label: "Population",
+    id: "status",
+    label: "Status",
     minWidth: 170,
-    align: "right",
+    align: "center",
     format: (value: number) => value.toLocaleString("en-US"),
   },
   {
-    id: "size",
-    label: "Size\u00a0(km\u00b2)",
-    minWidth: 170,
-    align: "right",
+    id: "type",
+    label: "Type",
+    minWidth: 70,
+    align: "center",
     format: (value: number) => value.toLocaleString("en-US"),
   },
   {
-    id: "density",
-    label: "Density",
+    id: "quality",
+    label: "Quality",
+    minWidth: 170,
+    align: "center",
+    format: (value: number) => value.toFixed(2),
+  },
+  {
+    id: "created_on",
+    label: "Created On",
+    minWidth: 170,
+    align: "right",
+    format: (value: number) => value.toFixed(2),
+  },
+  {
+    id: "action",
+    label: "Action",
     minWidth: 170,
     align: "right",
     format: (value: number) => value.toFixed(2),
@@ -46,38 +72,63 @@ const columns: readonly Column[] = [
 
 interface Data {
   name: string;
-  code: string;
-  population: number;
-  size: number;
-  density: number;
+  category: string;
+  status: string;
+  type: string;
+  quality: string;
+  created_on: string;
+  action: string;
 }
 
 function createData(
   name: string,
-  code: string,
-  population: number,
-  size: number
+  category: string,
+  status: string,
+  type: string,
+  quality: string,
+  created_on: string,
+  action: string
 ): Data {
-  const density = population / size;
-  return { name, code, population, size, density };
+  return { name, category, status, type, quality, created_on, action };
 }
 
 const rows = [
-  createData("India", "IN", 1324171354, 3287263),
-  createData("China", "CN", 1403500365, 9596961),
-  createData("Italy", "IT", 60483973, 301340),
-  createData("United States", "US", 327167434, 9833520),
-  createData("Canada", "CA", 37602103, 9984670),
-  createData("Australia", "AU", 25475400, 7692024),
-  createData("Germany", "DE", 83019200, 357578),
-  createData("Ireland", "IE", 4857000, 70273),
-  createData("Mexico", "MX", 126577691, 1972550),
-  createData("Japan", "JP", 126317000, 377973),
-  createData("France", "FR", 67022000, 640679),
-  createData("United Kingdom", "GB", 67545757, 242495),
-  createData("Russia", "RU", 146793744, 17098246),
-  createData("Nigeria", "NG", 200962417, 923768),
-  createData("Brazil", "BR", 210147125, 8515767),
+  createData(
+    "Regular text column",
+    "Broadcast",
+    "SENT",
+    "Text",
+    "High",
+    "Oct 4, 2024, 06:55PM",
+    ""
+  ),
+  createData(
+    "Regular text column",
+    "Broadcast",
+    "SENT",
+    "Text",
+    "High",
+    "Oct 4, 2024, 06:55PM",
+    ""
+  ),
+  createData(
+    "Regular text column",
+    "Broadcast",
+    "SENT",
+    "Text",
+    "High",
+    "Oct 4, 2024, 06:55PM",
+    ""
+  ),
+  createData(
+    "Regular text column",
+    "Broadcast",
+    "SENT",
+    "Text",
+    "High",
+    "Oct 4, 2024, 06:55PM",
+    ""
+  ),
 ];
 
 export default function StickyHeadTable() {
@@ -97,20 +148,33 @@ export default function StickyHeadTable() {
 
   return (
     <div className="w-[100%]">
-
-      
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
-        <TableContainer sx={{ maxHeight: 440, width: "100%" }}>
-          <Table stickyHeader aria-label="sticky table">
+        <TableContainer sx={{ width: "100%", border: "1px solid #00806933" }}>
+          <Table
+            stickyHeader
+            aria-label="sticky table"
+            sx={{
+              "& .MuiTableCell-root": {
+                borderBottom: "none", // This removes the horizontal lines in each cell
+              },
+            }}
+          >
             <TableHead>
               <TableRow>
                 {columns.map((column) => (
                   <TableCell
                     key={column.id}
                     align={column.align}
-                    style={{ minWidth: column.minWidth, backgroundColor: '#008069', color: 'white' }}
+                    style={{
+                      minWidth: column.minWidth,
+                      backgroundColor: "#CDE7E2",
+                      color: "#667085",
+                    }}
                   >
                     {column.label}
+                    <ArrowDownwardIcon
+                      sx={{ fonttype: 16, ml: 1, color: "#667085" }} // Icon styling (optional)
+                    />
                   </TableCell>
                 ))}
               </TableRow>
@@ -124,16 +188,37 @@ export default function StickyHeadTable() {
                       hover
                       role="checkbox"
                       tabIndex={-1}
-                      key={row.code}
+                      key={row.category}
                     >
                       {columns.map((column) => {
                         const value = row[column.id];
+                        console.log(column.label);
+
                         return (
-                          <TableCell key={column.id} align={column.align}>
-                            {column.format && typeof value === "number"
-                              ? column.format(value)
-                              : value}
-                          </TableCell>
+                          <>
+                            {column.id === "status" ? (
+                              <TableCell key={column.id} align={column.align}>
+                                <Box
+                                  sx={{
+                                    // width:"4.5rem",
+                                    mx: 4,
+                                    py: "3px",
+                                    bgcolor: "#10984BD4",
+                                    color: "white",
+                                    borderRadius: "4px",
+                                  }}
+                                >
+                                  <Typography sx={{fontSize:"0.75rem"}}>{value}</Typography>
+                                </Box>
+                              </TableCell>
+                            ) : (
+                              <TableCell key={column.id} align={column.align}>
+                                {column.format && typeof value === "number"
+                                  ? column.format(value)
+                                  : <Typography sx={{fontSize:"0.875rem"}}>{value}</Typography>}
+                              </TableCell>
+                            )}
+                          </>
                         );
                       })}
                     </TableRow>
@@ -142,7 +227,7 @@ export default function StickyHeadTable() {
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination
+        {/* <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
           count={rows.length}
@@ -150,7 +235,7 @@ export default function StickyHeadTable() {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
-        />
+        /> */}
       </Paper>
     </div>
   );
