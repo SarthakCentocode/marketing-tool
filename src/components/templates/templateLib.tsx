@@ -71,14 +71,14 @@ export default function TemplatesLib() {
                 <Select
                   labelId="demo-select-small-label"
                   id="demo-select-small"
-                  value={12} // Controlled component value
-                  defaultValue={12} // Set the default value to 12
-                  IconComponent={KeyboardArrowDownIcon} // Custom dropdown arrow icon
+                  value={12} 
+                  defaultValue={12} 
+                  IconComponent={KeyboardArrowDownIcon} 
                   sx={{
-                    "& .MuiOutlinedInput-notchedOutline": { border: "none" }, // Remove border
+                    "& .MuiOutlinedInput-notchedOutline": { border: "none" }, 
                     "& .MuiSelect-icon": {
                       color: "#5B5B5B",
-                      fontSize: "0.875rem", // Set icon size
+                      fontSize: "0.875rem", 
                     },
                     "& .MuiSelect-select": {
                       paddingRight: "24px",
@@ -86,8 +86,8 @@ export default function TemplatesLib() {
                       color :"#5B5B5B"
                     },
                   }}
-                  // onChange={handleChange} // Uncomment and implement if needed
-                >
+                  >
+
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
