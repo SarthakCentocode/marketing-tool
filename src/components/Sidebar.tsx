@@ -1,129 +1,12 @@
-// "use client";
-
-// import { useState, useEffect } from "react";
-// import Link from "next/link";
-// import { FiMenu, FiChevronLeft } from "react-icons/fi";
-// import Image from "next/image";
-// import home from "@/public/home.svg";
-// import template from "@/public/template.svg";
-// import task from "@/public/task.svg";
-// import calender from "@/public/calender.svg";
-// import team from "@/public/team.svg";
-// import message from "@/public/message.svg";
-// import file from "@/public/file.svg";
-// import report from "@/public/report.svg";
-// import help from "@/public/help.svg";
-
-// type SidebarProps = {
-//   children: React.ReactNode;
-// };
-
-// const navigation = [
-//   { headline: "Home", name: "dashboard", route: "/dashboard", icon: home },
-//   {
-//     headline: "Templates",
-//     name: "Template Library",
-//     route: "/templates",
-//     icon: template,
-//   },
-//   { headline: "Tasks", name: "Tasks", route: "/tasks", icon: task },
-//   {
-//     headline: "Calendar",
-//     name: "Calendar",
-//     route: "/calendar",
-//     icon: calender,
-//   },
-//   { headline: "Team", name: "Team", route: "/team", icon: team },
-//   { headline: "Messages", name: "Messages", route: "/messages", icon: message },
-//   { headline: "Files", name: "Files", route: "/files", icon: file },
-//   { headline: "Reports", name: "Reports", route: "/reports", icon: report },
-//   {
-//     headline: "Help & Support",
-//     name: "Help and Support",
-//     route: "/help-support",
-//     icon: help,
-//   },
-// ];
-
-// const Sidebar: React.FC<SidebarProps> = ({ children }) => {
-//   const [isOpen, setIsOpen] = useState(false);
-//   const [selectedRoute, setSelectedRoute] = useState("/dashboard");
-//   const [pageTitle, setPageTitle] = useState("Home");
-
-//   const toggleSidebar = () => {
-//     setIsOpen(!isOpen);
-//   };
-
-//   useEffect(() => {
-//     const currentNavItem = navigation.find(
-//       (item) => item.route === selectedRoute
-//     );
-//     if (currentNavItem) setPageTitle(currentNavItem.headline);
-//   }, [selectedRoute]);
-
-//   return (
-//     <div className="flex h-screen w-screen relative">
-//       {/* Sidebar */}
-//       <div
-//         className={`bg-[#E6F2F0] text-white p-5 ${
-//           isOpen ? "w-[20%]" : "w-[5%]"
-//         }
-//         duration-200 fixed z-10 top-0 left-0 h-full`}
-//       >
-//         <div className="flex justify-between items-center mb-8 text-black text-[15px] font-bold">
-//           {isOpen && (
-//             <div className="rounded-sm h-[48px] w-[48px] bg-[#EFEBFA]"></div>
-//           )}
-//           {isOpen && <div className="text-[#0D6759]">Wabuzz</div>}
-
-//           <button onClick={toggleSidebar} className="text-[#145E54] text-2xl">
-//             {isOpen ? <FiChevronLeft /> : <FiMenu />}
-//           </button>
-//         </div>
-
-//         <div className="flex flex-col mb-6 overflow-y-auto space-y-6">
-//           {navigation.map((item) => (
-//             <Link
-//               key={item.name}
-//               href={item.route}
-//               onClick={() => setSelectedRoute(item.route)}
-//               className={`flex items-center text-[15px] text-[#145E54] hover:bg-[#145E54]
-//               hover:text-white ${isOpen && "py-1 px-2"} rounded-md
-//               ${selectedRoute === item.route ? "bg-[#E6F5F2]" : ""}`}
-//             >
-//               <Image src={item.icon} alt={item.name} width={24} height={24} />
-//               <span
-//                 className={`ml-2 ${
-//                   isOpen ? "inline-block" : "hidden"
-//                 } transition-all duration-200`}
-//               >
-//                 {item.headline}
-//               </span>
-//             </Link>
-//           ))}
-//         </div>
-//       </div>
-
-//       {/* Main Content */}
-//       <div className={`relative ${isOpen ? "ms-[20%]" : "ms-[5%]"}`}>
-//         {/* Top Bar */}
-//         <div className="bg-[#0D6759] p-2 sticky top-0 w-full h-14 text-white px-4 font-bold">
-//           {pageTitle}
-//         </div>
-
-//         {/* Content Area */}
-//         <div className="h-full w-full overflow-y-auto p-4 bg-[#E6F5F2]">
-//           {children}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Sidebar;
 "use client";
-import { Box, Tooltip, Typography } from "@mui/material";
-import IconButton from "@mui/material/IconButton";
+import {
+  Box,
+  Tooltip,
+  Typography,
+  IconButton,
+  Modal,
+  Button,
+} from "@mui/material";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -142,6 +25,8 @@ import message from "@/public/message.svg";
 import file from "@/public/file.svg";
 import report from "@/public/report.svg";
 import help from "@/public/help.svg";
+import arrow from "@/public/arrow.svg";
+import unsaved from "@/public/unsaved.svg";
 
 const sliderData = [
   { headline: "Home", route: "/dashboard", icon: home },
@@ -162,9 +47,12 @@ export default function DashboardLayout({
 }) {
   const pathName = usePathname(); // Get current path
   const [open, setOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const handleDrawerOpen = () => setOpen(true);
   const handleDrawerClose = () => setOpen(false);
+  const handleModalOpen = () => setModalOpen(true);
+  const handleModalClose = () => setModalOpen(false);
 
   // Find the current page title based on the route
   const currentPageTitle =
@@ -334,27 +222,85 @@ export default function DashboardLayout({
                 justifyContent: "left",
               }}
             >
+              <IconButton
+                onClick={handleModalOpen}
+                sx={{ display: "flex", alignItems: "center", gap: "10px" }}
+              >
+                <Image
+                  src={arrow}
+                  alt="arrow"
+                  style={{ width: "14px", height: "16px", marginLeft: "10px" }}
+                />
+              </IconButton>
               <Typography className="left-0 text-[#008069] font-semibold text-[20px]">
                 {currentPageTitle}
               </Typography>
             </Box>
-
             <Box
               sx={{
-                height: "100vh", 
+                height: "100vh",
                 pt: { xl: "0%", lg: "3%", md: "4%", sm: "3%", xs: "2%" },
-                backgroundColor: "#FFFFFF", 
-               
+                backgroundColor: "#FFFFFF",
               }}
             >
-              <Box sx={{ flexGrow: 1 }}>
-                {children}{" "}
-               
-              </Box>
+              <Box sx={{ flexGrow: 1 }}>{children} </Box>
             </Box>
           </Box>
         </Box>
       </Box>
+
+      {/* Modal Component */}
+      <Modal
+        open={modalOpen}
+        onClose={handleModalClose}
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            border: "2px solid-gray-400",
+            boxShadow: 24,
+            p: 4,
+            borderRadius: "8px",
+          }}
+        >
+          <Image
+            src={unsaved}
+            alt="arrow"
+            style={{ width: "50px", height: "50px", marginLeft: "1px" }}
+          />
+          <Typography id="modal-title" variant="h6" component="h2">
+            Unsaved changes
+          </Typography>
+          <Typography id="modal-description" sx={{ mt: 1 }}>
+            Do you want to save or discard changes?
+          </Typography>
+          <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
+            <Button
+              onClick={handleModalClose}
+              variant="contained"
+              className="bg-white text-black"
+              sx={{ textTransform: "none" }}
+            >
+              Discard Changes
+            </Button>
+            <Button
+              onClick={handleModalClose}
+              variant="contained"
+              className="bg-[#008069]"
+              sx={{ textTransform: "none" }}
+            >
+              Save Draft
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
     </div>
   );
 }
