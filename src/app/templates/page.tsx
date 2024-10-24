@@ -20,8 +20,8 @@ export default function Templates() {
         <div className="my-8 flex justify-between items-center ">
           <div className=" bg-white  gap-2 flex justify-around items-center border-[1px] border-[#008069] p-[1.5px]  rounded-md">
             <button
-              className={`px-5   rounded-md py-2  text-[16px] text-[600]  ${
-                isTab === 0 && "bg-[#008069] text-white"
+              className={`px-5   rounded-md py-2  text-[16px] font-[600]  ${
+                isTab === 0 ? "bg-[#008069] text-white" : "text-[#627065]"
               }`}
               onClick={handleTemplates}
             >
@@ -29,8 +29,8 @@ export default function Templates() {
             </button>
 
             <button
-              className={`px-5   rounded-md py-2  text-[16px] text-[600]  ${
-                isTab === 1 && "bg-[#008069] text-white"
+              className={`px-5   rounded-md py-2  text-[16px] font-[600]  ${
+                isTab === 1 ? "bg-[#008069] text-white" : "text-[#627065]"
               }`}
               onClick={handleMyTemplates}
             >
@@ -45,7 +45,7 @@ export default function Templates() {
                   // value={searchQuery}
                   // onChange={handleSearchChange}
                   placeholder="Search..."
-                  className="w-[343px] pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-green-500"
+                  className="w-[343px] border-[1.5px] border-[#0D6759] pl-10 pr-4 py-2  rounded-md  focus:border-[#0D6759]"
                 />
                 <FiSearch className="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-500" />
               </div>

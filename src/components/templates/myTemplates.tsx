@@ -35,21 +35,21 @@ const columns: readonly Column[] = [
   {
     id: "status",
     label: "Status",
-    minWidth: 170,
+    minWidth: 110,
     align: "center",
     format: (value: number) => value.toLocaleString("en-US"),
   },
   {
     id: "type",
     label: "Type",
-    minWidth: 170,
+    minWidth: 110,
     align: "center",
     format: (value: number) => value.toLocaleString("en-US"),
   },
   {
     id: "quality",
     label: "Quality",
-    minWidth: 170,
+    minWidth: 110,
     align: "center",
     format: (value: number) => value.toFixed(2),
   },
@@ -63,7 +63,7 @@ const columns: readonly Column[] = [
   {
     id: "action",
     label: "Action",
-    minWidth: 170,
+    minWidth: 110,
     align: "right",
     format: (value: number) => value.toFixed(2),
   },
@@ -128,7 +128,37 @@ const rows = [
     "Oct 4, 2024, 06:55PM",
     ""
   ),
+  createData(
+    "Regular text column",
+    "Broadcast",
+    "SENT",
+    "Text",
+    "High",
+    "Oct 4, 2024, 06:55PM",
+    ""
+  ),
+  createData(
+    "Regular text column",
+    "Broadcast",
+    "SENT",
+    "Text",
+    "High",
+    "Oct 4, 2024, 06:55PM",
+    ""
+  ),
+  createData(
+    "Regular text column",
+    "Broadcast",
+    "SENT",
+    "Text",
+    "High",
+    "Oct 4, 2024, 06:55PM",
+    ""
+  ),
 ];
+
+
+
 
 export default function StickyHeadTable() {
   const [page, setPage] = React.useState(0);
