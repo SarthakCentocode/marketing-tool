@@ -184,7 +184,7 @@ export default function StickyHeadTable() {
             aria-label="sticky table"
             sx={{
               "& .MuiTableCell-root": {
-                borderBottom: "none", // This removes the horizontal lines in each cell
+                borderBottom: "none", 
               },
             }}
           >
