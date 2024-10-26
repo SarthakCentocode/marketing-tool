@@ -2,6 +2,7 @@
 import Card from "@/components/card";
 import MyTemplates from "@/components/templates/myTemplates";
 import TemplatesLib from "@/components/templates/templateLib";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FiSearch } from "react-icons/fi";
 
@@ -10,6 +11,8 @@ export default function Templates() {
   const [selectedFilter, setSelectedFilter] = useState("All");
 
   const filterOptions = ["All", "Approved", "Pending", "Draft", "Rejected"];
+
+  const navigate  = useRouter()
 
   const handleMyTemplates = () => {
     setTab(1);
@@ -21,6 +24,36 @@ export default function Templates() {
   const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedFilter(e.target.value);
   };
+
+  // const handleRequest = async () => {
+  //   const data = {
+  //     messaging_product: "whatsapp",
+  //     to: "918604435428",
+  //     type: "template",
+  //     template: {
+  //       name: "hello_world",
+  //       language: {
+  //         code: "en_US",
+  //       },
+  //     },
+  //   };
+  //   const token = "token";
+  //   const response = await fetch(
+  //     "https://graph.facebook.com/v20.0/488298064358404/messages",
+  //     {
+  //       method: "POST",
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ data }),
+  //     }
+  //   );
+
+  //   console.log(response);
+  // };
+
+  // handleRequest();
 
   return (
     <>
@@ -57,7 +90,7 @@ export default function Templates() {
               </div>
 
               {isTab === 0 ? (
-                <button className="ms-2 border-[1px] bg-[#008069] px-4 h-full text-white rounded-md">
+                <button onClick={()=> navigate.push("/templates/add_template")} className="ms-2 border-[1px] bg-[#008069] px-4 h-full text-white rounded-md">
                   Add Template
                 </button>
               ) : (
