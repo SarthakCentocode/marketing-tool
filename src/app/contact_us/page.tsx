@@ -11,6 +11,9 @@ import {
   Checkbox,
   Paper,
   Typography,
+  Modal,
+  SxProps,
+  Box,
 } from "@mui/material";
 import { CiFilter } from "react-icons/ci";
 import { FiSearch } from "react-icons/fi";
@@ -50,9 +53,94 @@ const rows: Row[] = [
   // Add more data as needed
 ];
 
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
+function BroadcastModal({
+  open,
+  handleClose,
+}: {
+  open: boolean;
+  handleClose: () => void;
+}) {
+  return (
+    <Modal
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Box sx={style}>
+        <Typography id="modal-modal-title" variant="h6" component="h2">
+          Broadcast modal
+        </Typography>
+      </Box>
+    </Modal>
+  );
+}
+function AddContact({
+  open,
+  handleClose,
+}: {
+  open: boolean;
+  handleClose: () => void;
+}) {
+  return (
+    <Modal
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Box sx={style}>
+        <Typography id="modal-modal-title" variant="h6" component="h2">
+          Add Contact
+        </Typography>
+      </Box>
+    </Modal>
+  );
+}
+function ImportCsv({
+  open,
+  handleClose,
+}: {
+  open: boolean;
+  handleClose: () => void;
+}) {
+  return (
+    <Modal
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Box sx={style}>
+        <Typography id="modal-modal-title" variant="h6" component="h2">
+          Text in a modal
+        </Typography>
+        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+          Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+        </Typography>
+      </Box>
+    </Modal>
+  );
+}
+
 const ContactUs = () => {
   const [selected, setSelected] = useState<number[]>([]);
-
+  const [open, setOpen] = useState({
+    modalName: "",
+    open: false,
+  });
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
       const newSelecteds = rows.map((row) => row.id);
@@ -60,6 +148,13 @@ const ContactUs = () => {
       return;
     }
     setSelected([]);
+  };
+
+  const handleModalClick = (modalName: string) => {
+    setOpen({
+      modalName: modalName,
+      open: true,
+    });
   };
 
   const handleClick = (id: number) => {
@@ -98,13 +193,22 @@ const ContactUs = () => {
           Broadcast Your Message
         </Typography>
         <div className="flex items-center gap-2">
-          <button className="font-[600] text-[1rem] bg-[#047857] text-white px-4 py-1 rounded-sm">
+          <button
+            onClick={() => handleModalClick("broadcast")}
+            className="font-[600] text-[1rem] bg-[#047857] text-white px-4 py-1 rounded-sm"
+          >
             Broadcast
           </button>
-          <button className="border-[1.5px] border-[#008069] font-[600] text-[1rem] px-4 py-1 rounded-sm text-[#008069]">
+          <button
+            onClick={() => handleModalClick("add_contact")}
+            className="border-[1.5px] border-[#008069] font-[600] text-[1rem] px-4 py-1 rounded-sm text-[#008069]"
+          >
             Add Contact
           </button>
-          <button className="border-[1.5px] border-[#008069] font-[600] text-[1rem] px-4 py-1 rounded-sm text-[#008069]">
+          <button
+            onClick={() => handleModalClick("import_csv")}
+            className="border-[1.5px] border-[#008069] font-[600] text-[1rem] px-4 py-1 rounded-sm text-[#008069]"
+          >
             Import CSV
           </button>
         </div>
@@ -124,7 +228,7 @@ const ContactUs = () => {
           Filter
         </button>
       </div>
-      <TableContainer  sx={{ mt: 4 }}>
+      <TableContainer sx={{ mt: 4 }}>
         <Table>
           <TableHead>
             <TableRow>
@@ -185,6 +289,24 @@ const ContactUs = () => {
           </TableBody>
         </Table>
       </TableContainer>
+      {open.modalName === "broadcast" && (
+        <BroadcastModal
+          open={open.open}
+          handleClose={() => setOpen({ modalName: "", open: false })}
+        />
+      )}
+      {open.modalName === "add_contact" && (
+        <AddContact
+          open={open.open}
+          handleClose={() => setOpen({ modalName: "", open: false })}
+        />
+      )}
+      {open.modalName === "import_csv" && (
+        <ImportCsv
+          open={open.open}
+          handleClose={() => setOpen({ modalName: "", open: false })}
+        />
+      )}
     </div>
   );
 };

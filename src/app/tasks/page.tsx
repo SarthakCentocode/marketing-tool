@@ -23,22 +23,31 @@ const ChatPage = () => {
   const sendMessage = async () => {
     const whatsappMessage = {
       messaging_product: "whatsapp",
-      to: "918604435428", // Hardcoded receiver's number
-      type: "template",
-      template: {
-        name: "hello_world",
-        language: { code: "en_US" },
+      recipient_type: "individual",
+      to: "916267018690",
+      type: "interactive",
+      interactive: {
+        type: "address_message",
+        body: {
+          text: "Thanks for your order! Tell us what address you’d like this order delivered to.",
+        },
+        action: {
+          name: "address_message",
+          parameters: {
+            country: "IN",
+          },
+        },
       },
     };
 
     try {
       const response = await axios.post(
-        "https://graph.facebook.com/v20.0/488298064358404/messages",
+        "https://graph.facebook.com/v15.0/488298064358404/messages",
         whatsappMessage,
         {
           headers: {
             Authorization:
-              "Bearer EAAYuiifnBQoBOZBk7mxXmY24ZAPvOkgDPgay1voVp1ShRVcZABnynpr1ZCmUUIbZB0vUcx4MHPUxIBRZBOXEAjwwTiy9jjuu1FIX3kAGlBFlPjf1QxllfXsDG0XZBZAMm1HveqeyRSqlWxvxlK5PbSWyEuyya2tB7adwtcd629pA3M4vTpu6ZCZC7Ykapf0xRlTr6PkDuRSqzyySZAL1iSuW232SQAaSb0ZD",
+              "Bearer EAAYuiifnBQoBOxjV2PFnwS5SE061VTw3Tfv5hZANOgMSA3SqpdFxKZCr19Ksod8vFyF658c4f6jYf36Dbet82moLWETOy7AE4ZC1t3jfd9KgWVE8uxkrphuglU0ktXYykju9BYppMZCrG6pEr3vBi8UOuM8rb7z8LCnYsLbQlsAYlCZAGX2HIWZBbUrijecTZCRfaMVfya0ZCYAiYaCvZCZAszjE7KdgYZD",
             "Content-Type": "application/json",
           },
         }

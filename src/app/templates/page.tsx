@@ -25,35 +25,35 @@ export default function Templates() {
     setSelectedFilter(e.target.value);
   };
 
-  const handleRequest = async () => {
-    const data = {
-      messaging_product: "whatsapp",
-      to: "918604435428",
-      type: "template",
-      template: {
-        name: "hello_world",
-        language: {
-          code: "en_US",
-        },
-      },
-    };
-    const token = "token";
-    const response = await fetch(
-      "https://graph.facebook.com/v20.0/488298064358404/messages",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ data }),
-      }
-    );
+  // const handleRequest = async () => {
+  //   const data = {
+  //     messaging_product: "whatsapp",
+  //     to: "918604435428",
+  //     type: "template",
+  //     template: {
+  //       name: "hello_world",
+  //       language: {
+  //         code: "en_US",
+  //       },
+  //     },
+  //   };
+  //   const token = "token";
+  //   const response = await fetch(
+  //     "https://graph.facebook.com/v20.0/488298064358404/messages",
+  //     {
+  //       method: "POST",
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ data }),
+  //     }
+  //   );
 
-    console.log(response);
-  };
+  //   console.log(response);
+  // };
 
-  handleRequest();
+  // handleRequest();
 
   return (
     <>
