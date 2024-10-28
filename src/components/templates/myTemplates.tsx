@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEffect, useState } from "react";
 import {
   Paper,
   TableContainer,
@@ -13,15 +14,16 @@ import {
 } from "@mui/material";
 import { FiSearch } from "react-icons/fi";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import moment from "moment";
 
 interface Column {
   id:
-    | "name"
+    | "templateName"
     | "category"
     | "status"
     | "type"
     | "quality"
-    | "created_on"
+    | "created_at"
     | "action";
   label: string;
   minWidth?: number;
@@ -30,7 +32,7 @@ interface Column {
 }
 
 const columns: readonly Column[] = [
-  { id: "name", label: "Name", minWidth: 170 },
+  { id: "templateName", label: "Name", minWidth: 170 },
   { id: "category", label: "Category", minWidth: 100 },
   {
     id: "status",
@@ -54,7 +56,7 @@ const columns: readonly Column[] = [
     format: (value: number) => value.toFixed(2),
   },
   {
-    id: "created_on",
+    id: "created_at",
     label: "Created On",
     minWidth: 170,
     align: "right",
@@ -158,37 +160,24 @@ const rows = [
 ];
 
 export default function StickyHeadTable() {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [isTemplates, setIsTemplates] = useState([]);
 
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-
-  React.useEffect(() => {
-    const res = async () => {
+  useEffect(() => {
+    const response = async () => {
       try {
-        const res = await fetch("http://localhost:3000/read", {
+        const res = await fetch("/api/read", {
           method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
         });
         const data = await res.json();
-        console.log(data);
+        setIsTemplates(data);
       } catch (err) {
         console.log(err);
       }
     };
-    res();
+    response();
   }, []);
+
+  console.log("---------->>>>>>>>>>>", isTemplates);
 
   return (
     <div className="w-[100%]">
@@ -224,56 +213,53 @@ export default function StickyHeadTable() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
-                  return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={row.category}
-                    >
-                      {columns.map((column) => {
-                        const value = row[column.id];
-                        console.log(column.label);
-
-                        return (
-                          <>
-                            {column.id === "status" ? (
-                              <TableCell key={column.id} align={column.align}>
-                                <Box
-                                  sx={{
-                                    // width:"4.5rem",
-                                    mx: 4,
-                                    py: "3px",
-                                    bgcolor: "#10984BD4",
-                                    color: "white",
-                                    borderRadius: "4px",
-                                  }}
-                                >
-                                  <Typography sx={{ fontSize: "0.75rem" }}>
-                                    {value}
-                                  </Typography>
-                                </Box>
-                              </TableCell>
-                            ) : (
-                              <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === "number" ? (
-                                  column.format(value)
-                                ) : (
-                                  <Typography sx={{ fontSize: "0.875rem" }}>
-                                    {value}
-                                  </Typography>
-                                )}
-                              </TableCell>
-                            )}
-                          </>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })}
+              {isTemplates.map((row, index) => {
+                return (
+                  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                    {columns.map((column) => {
+                      const value = row[column.id];
+                      return (
+                        <>
+                          {column.id === "status" ? (
+                            <TableCell key={column.id} align={column.align}>
+                              <Box
+                                sx={{
+                                  // width:"4.5rem",
+                                  mx: 4,
+                                  py: "3px",
+                                  bgcolor: "#10984BD4",
+                                  color: "white",
+                                  borderRadius: "4px",
+                                }}
+                              >
+                                <Typography sx={{ fontSize: "0.75rem" }}>
+                                  {value}
+                                </Typography>
+                              </Box>
+                            </TableCell>
+                          ) : column.id === "created_at" ? (
+                            <TableCell key={column.id} align={column.align}>
+                              <Typography sx={{ fontSize: "0.875rem" }}>
+                                {moment(value).format("MMM DD YYYY, hh:mm a ")}
+                              </Typography>
+                            </TableCell>
+                          ) : (
+                            <TableCell key={column.id} align={column.align}>
+                              {column.format && typeof value === "number" ? (
+                                column.format(value)
+                              ) : (
+                                <Typography sx={{ fontSize: "0.875rem" }}>
+                                  {value}
+                                </Typography>
+                              )}
+                            </TableCell>
+                          )}
+                        </>
+                      );
+                    })}
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </TableContainer>
