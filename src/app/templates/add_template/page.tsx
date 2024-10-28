@@ -642,7 +642,6 @@ const AddTemplate = () => {
     buttonTitle: string;
   }
 
-  
   const handleCtaChange = (
     index: number,
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -659,7 +658,6 @@ const AddTemplate = () => {
 
   return (
     <>
-      
       <div className="flex-grow h-full w-full p-6">
         <Typography
           sx={{
@@ -695,6 +693,7 @@ const AddTemplate = () => {
               fullWidth
               label=""
               select
+              name="category"
               variant="outlined"
               placeholder="Select a category"
               value={formik.values.category}
