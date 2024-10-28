@@ -29,6 +29,6 @@ const templateModuel = new Schema({
 });
 
 const TemplateModuel =
-  mongoose.models.candidates || mongoose.model("templates", templateModuel);
+  mongoose.models.Template || mongoose.model("Template", templateModuel);
 
 export default TemplateModuel;
