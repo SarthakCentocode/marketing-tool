@@ -157,9 +157,6 @@ const rows = [
   ),
 ];
 
-
-
-
 export default function StickyHeadTable() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -175,6 +172,24 @@ export default function StickyHeadTable() {
     setPage(0);
   };
 
+  React.useEffect(() => {
+    const res = async () => {
+      try {
+        const res = await fetch("http://localhost:3000/read", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await res.json();
+        console.log(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    res();
+  }, []);
+
   return (
     <div className="w-[100%]">
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -184,7 +199,7 @@ export default function StickyHeadTable() {
             aria-label="sticky table"
             sx={{
               "& .MuiTableCell-root": {
-                borderBottom: "none", 
+                borderBottom: "none",
               },
             }}
           >
@@ -237,14 +252,20 @@ export default function StickyHeadTable() {
                                     borderRadius: "4px",
                                   }}
                                 >
-                                  <Typography sx={{fontSize:"0.75rem"}}>{value}</Typography>
+                                  <Typography sx={{ fontSize: "0.75rem" }}>
+                                    {value}
+                                  </Typography>
                                 </Box>
                               </TableCell>
                             ) : (
                               <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === "number"
-                                  ? column.format(value)
-                                  : <Typography sx={{fontSize:"0.875rem"}}>{value}</Typography>}
+                                {column.format && typeof value === "number" ? (
+                                  column.format(value)
+                                ) : (
+                                  <Typography sx={{ fontSize: "0.875rem" }}>
+                                    {value}
+                                  </Typography>
+                                )}
                               </TableCell>
                             )}
                           </>
