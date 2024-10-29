@@ -7,12 +7,12 @@ const templateModuel = new Schema({
   templateName: {
     type: "string",
   },
-//   header: {
-//     type: "string",
-//   },
-//   footer: {
-//     type: "string",
-//   },
+  header: {
+    type: "string",
+  },
+  footer: {
+    type: "string",
+  },
   message: {
     type: "string",
   },
