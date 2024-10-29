@@ -38,16 +38,14 @@ const subHeading = {
 interface formData {
   category: string;
   templateName: string;
-  // header: string;
-  // footer: string;
+  header: string;
+  footer: string;
   message: string;
   language: string;
   type: string;
 }
 
 const AddTemplate = () => {
-  const [previewMessage, setPreviewMessage] = useState("");
-  const [previewType, setPreviewType] = useState("");
   const [ctas, setCtas] = useState([{ category: "", buttonTitle: "" }]);
 
   const {
@@ -57,9 +55,6 @@ const AddTemplate = () => {
     formState: { errors },
   } = useForm<formData>();
 
-  const handlePreviewUpdate = (e: any) => {
-    setPreviewMessage(e.target.value);
-  };
 
   const handleAddCta = () => {
     setCtas([...ctas, { category: "", buttonTitle: "" }]);
@@ -69,20 +64,6 @@ const AddTemplate = () => {
     category: string;
     buttonTitle: string;
   }
-
-  const handleCtaChange = (
-    index: number,
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = event.target;
-    const updatedCtas = [...ctas];
-
-    if (name === "category" || name === "buttonTitle") {
-      updatedCtas[index][name] = value;
-    }
-
-    setCtas(updatedCtas);
-  };
 
   const handleUploadTemplate = async (data: any) => {
     console.log(data);
@@ -125,12 +106,13 @@ const AddTemplate = () => {
                 label=""
                 select
                 {...register("category")}
-                name="catagory"
                 variant="outlined"
                 placeholder="Select a category"
                 sx={{
                   backgroundColor: "#F0F7F6",
+                  height:"52px",
                   "& .MuiOutlinedInput-root": {
+                    height:"52px",
                     "& fieldset": {
                       borderWidth: "1px",
                       borderColor: "#008069",
@@ -166,7 +148,9 @@ const AddTemplate = () => {
                 helperText={errors.templateName && "Template name is required"}
                 sx={{
                   backgroundColor: "#F0F7F6",
+                  height:"52px",
                   "& .MuiOutlinedInput-root": {
+                    height:"52px",
                     "& fieldset": {
                       borderWidth: "1px",
                       borderColor: "#008069",
@@ -199,10 +183,12 @@ const AddTemplate = () => {
                 fullWidth
                 variant="outlined"
                 placeholder="Message"
-                // {...register("header", { required: true })}
+                {...register("header", { required: true })}
                 sx={{
                   backgroundColor: "#F0F7F6",
+                  height:"52px",
                   "& .MuiOutlinedInput-root": {
+                    height:"52px",
                     "& fieldset": {
                       borderWidth: "1px",
                       borderColor: "#008069",
@@ -273,10 +259,12 @@ const AddTemplate = () => {
                 fullWidth
                 variant="outlined"
                 placeholder="Message"
-                // {...register("footer", { required: true })}
+                {...register("footer", { required: true })}
                 sx={{
                   backgroundColor: "#F0F7F6",
+                  height:"52px",
                   "& .MuiOutlinedInput-root": {
+                    height:"52px",
                     "& fieldset": {
                       borderWidth: "1px",
                       borderColor: "#008069",
@@ -357,7 +345,9 @@ const AddTemplate = () => {
                     // onChange={(e) => handleCtaChange(index, e)}
                     sx={{
                       backgroundColor: "#F0F7F6",
+                      height:"52px",
                       "& .MuiOutlinedInput-root": {
+                        height:"52px",
                         "& fieldset": {
                           borderWidth: "1px",
                           borderColor: "#008069",
@@ -378,39 +368,40 @@ const AddTemplate = () => {
                     }}
                   />
                   <TextField
-                    fullWidth
-                    select
-                    variant="outlined"
-                    placeholder="Select a Category"
-                    name="category"
-                    // value={cta.category}
-                    // onChange={(e) => handleCtaChange(index, e)}
-                    sx={{
-                      backgroundColor: "#F0F7F6",
-                      "& .MuiOutlinedInput-root": {
-                        "& fieldset": {
-                          borderWidth: "1px",
-                          borderColor: "#008069",
-                        },
-                        "&:hover fieldset": {
-                          borderColor: "#008069",
-                        },
-                        "&.Mui-focused fieldset": {
-                          borderColor: "#008069",
-                        },
-                      },
-                      "& .MuiSelect-icon": {
-                        color: "#008069",
-                      },
-                      "& .MuiInputBase-input::placeholder": {
-                        color: "#757575",
-                      },
-                    }}
-                  >
-                    <MenuItem value="Marketing">Marketing</MenuItem>
-                    <MenuItem value="Utility">Utility</MenuItem>
-                    <MenuItem value="Authentication">Authentication</MenuItem>
-                  </TextField>
+                fullWidth
+                label=""
+                select
+                {...register("category", { required: true })}
+                variant="outlined"
+                placeholder="Select a category"
+                sx={{
+                  backgroundColor: "#F0F7F6",
+                  height:"52px",
+                  "& .MuiOutlinedInput-root": {
+                    height:"52px",
+                    "& fieldset": {
+                      borderWidth: "1px",
+                      borderColor: "#008069",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "#008069",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#008069",
+                    },
+                  },
+                  "& .MuiSelect-icon": {
+                    color: "#008069",
+                  },
+                  "& .MuiInputBase-input::placeholder": {
+                    color: "#757575",
+                  },
+                }}
+              >
+                <MenuItem value="Marketing">Marketing</MenuItem>
+                <MenuItem value="Utility">Utility</MenuItem>
+                <MenuItem value="Authentication">Authentication</MenuItem>
+              </TextField>
                 </Box>
               </Box>
               <Typography
@@ -444,10 +435,12 @@ const AddTemplate = () => {
                 select
                 {...register("language")}
                 variant="outlined"
-                placeholder="Select a category"
+                placeholder="Select a language"
                 sx={{
                   backgroundColor: "#F0F7F6",
+                  height:"52px",
                   "& .MuiOutlinedInput-root": {
+                    height:"52px",
                     "& fieldset": {
                       borderWidth: "1px",
                       borderColor: "#008069",
@@ -467,8 +460,8 @@ const AddTemplate = () => {
                   },
                 }}
               >
-                <MenuItem value="Category 1">English</MenuItem>
-                <MenuItem value="Category 2">Hindi</MenuItem>
+                <MenuItem value="English">English</MenuItem>
+                <MenuItem value="Hindi">Hindi</MenuItem>
               </TextField>
               <Typography variant="h6" sx={{ ...subHeading, mt: 3, mb: 1 }}>
                 Template Type
@@ -482,7 +475,9 @@ const AddTemplate = () => {
                 placeholder="Select a category"
                 sx={{
                   backgroundColor: "#F0F7F6",
+                  height:"52px",
                   "& .MuiOutlinedInput-root": {
+                    height:"52px",
                     "& fieldset": {
                       borderWidth: "1px",
                       borderColor: "#008069",
