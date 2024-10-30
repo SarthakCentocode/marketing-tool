@@ -1,8 +1,16 @@
+import { Grid } from "@mui/material";
+
 export default function auth() {
   return (
     <div>
-      <h1>Auth Page</h1>
-      <p>This is the authentication page.</p>
+      <Grid container spacing={2}>
+        <Grid item xs={5} sx={{ display: "flex", justifyContent: "center" }}>
+          <h1>Grid 1</h1>
+        </Grid>
+        <Grid item xs={7} sx={{ display: "flex", justifyContent: "center", bgcolor:"#084837", height:"100%" }}>
+          <h1>Grid 2</h1>
+        </Grid>
+      </Grid>
     </div>
   );
 }
