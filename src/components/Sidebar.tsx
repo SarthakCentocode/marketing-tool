@@ -129,7 +129,7 @@ export default function DashboardLayout({
                         my: "3%",
                       }}
                     >
-                      WaBuzz
+                      Waptoz
                     </Typography>
                     <IconButton onClick={handleDrawerClose}>
                       <FiChevronLeft />
