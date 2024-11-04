@@ -136,14 +136,14 @@ export default function Auth() {
                 textTransform: "capitalize",
                 gap: 1,
               }}
-              onClick={() => loginUserWithGoogle}
+              onClick={() => loginUserWithGoogle()}
               variant="outlined"
             >
               <Image src={googleLogo} alt="Google" width={20} height={20} />
               Continue with Google
             </Button>
-            <FacebookLogin
-              appId="1088597931155576"
+            {/* <FacebookLogin
+              appId="1276228490177622"
               autoLoad
               callback={responseFacebook}
               render={(renderProps: any) => (
@@ -171,7 +171,7 @@ export default function Auth() {
                   Continue with Facebook
                 </Button>
               )}
-            />
+            /> */}
           </Box>
         </Grid>
         <Grid size={7} sx={{ overflow: "hidden" }}>

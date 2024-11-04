@@ -21,7 +21,7 @@ interface formData {
 const labelText = {
   fontSize: {
     xl: "1rem",
-    lg: "1rem",
+    lg: "0.8rem",
     md: "0.8rem",
     sm: "0.5rem",
     xs: "0.5rem",

@@ -27,7 +27,7 @@ interface formData {
 const labelText = {
   fontSize: {
     xl: "1rem",
-    lg: "1rem",
+    lg: "0.8rem",
     md: "0.8rem",
     sm: "0.5rem",
     xs: "0.5rem",
@@ -36,6 +36,17 @@ const labelText = {
   fontWeight: 400,
   textAlign: "left",
 };
+
+
+const textFieldStyle ={
+  height: {
+    xl:"3.5rem",
+    lg:"2rem",
+    md:"3rem",
+    sm:"2.6rem",
+    xs:"2.6rem",
+  }
+}
 
 export default function SignUp() {
   const [showCreatePassword, setShowCreatePassword] = useState(false);
@@ -115,7 +126,7 @@ export default function SignUp() {
               {...register("firstName", { required: true })}
               fullWidth
               type="text"
-              sx={{ height: "56px" }}
+              sx={{ ...textFieldStyle }}
             />
           </Box>
           <Box sx={{ mt: 1, ...labelText }}>
@@ -130,7 +141,7 @@ export default function SignUp() {
               {...register("lastName", { required: true })}
               fullWidth
               type="text"
-              sx={{ height: "56px" }}
+              sx={{ ...textFieldStyle }}
             />
           </Box>
         </Box>
@@ -141,7 +152,7 @@ export default function SignUp() {
             fullWidth
             type="email"
             {...register("email", { required: true })}
-            sx={{ height: "56px" }}
+            sx={{ ...textFieldStyle }}
           />
         </Box>
         <Box sx={{ display: "flex", gap: 1 }}>
@@ -184,7 +195,7 @@ export default function SignUp() {
               fullWidth
               type="text"
               {...register("phoneNumber", { required: true })}
-              sx={{ height: "56px" }}
+              sx={{ ...textFieldStyle }}
             />
           </Box>
         </Box>
@@ -203,7 +214,7 @@ export default function SignUp() {
             fullWidth
             sx={{
               "& .MuiOutlinedInput-root": {
-                height: "56px", // Sets the height
+                ...textFieldStyle, // Sets the height
               },
             }}
             variant="outlined"
@@ -247,7 +258,7 @@ export default function SignUp() {
             fullWidth
             sx={{
               "& .MuiOutlinedInput-root": {
-                height: "56px", // Sets the height
+                ...textFieldStyle, // Sets the height
               },
             }}
             variant="outlined"
