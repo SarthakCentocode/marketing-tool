@@ -7,18 +7,21 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  TableSortLabel,
   Checkbox,
   Paper,
   Typography,
   Modal,
-  SxProps,
   Box,
+  IconButton,
+  TextField,
+  Select,
+  MenuItem,
+  Button,
 } from "@mui/material";
 import { CiFilter } from "react-icons/ci";
 import { FiSearch } from "react-icons/fi";
+import { MdClose } from "react-icons/md";
 
-// Define the type for each row item
 interface Row {
   id: number;
   name: string;
@@ -27,7 +30,6 @@ interface Row {
   tags: string;
 }
 
-// Sample data with defined type
 const rows: Row[] = [
   {
     id: 1,
@@ -50,43 +52,20 @@ const rows: Row[] = [
     source: "Social Media",
     tags: "Interested",
   },
-  // Add more data as needed
 ];
 
-const style = {
-  position: "absolute",
+const modalStyle = {
+  position: "absolute" as "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: "background.paper",
-  border: "2px solid #000",
   boxShadow: 24,
   p: 4,
+  borderRadius: "8px",
 };
 
-function BroadcastModal({
-  open,
-  handleClose,
-}: {
-  open: boolean;
-  handleClose: () => void;
-}) {
-  return (
-    <Modal
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box sx={style}>
-        <Typography id="modal-modal-title" variant="h6" component="h2">
-          Broadcast modal
-        </Typography>
-      </Box>
-    </Modal>
-  );
-}
 function AddContact({
   open,
   handleClose,
@@ -95,21 +74,70 @@ function AddContact({
   handleClose: () => void;
 }) {
   return (
-    <Modal
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box sx={style}>
-        <Typography id="modal-modal-title" variant="h6" component="h2">
-          Add Contact
-        </Typography>
+    <Modal open={open} onClose={handleClose}>
+      <Box sx={modalStyle}>
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography variant="h6" component="h2" sx={{ fontWeight: "600" }}>
+            Create Contact
+          </Typography>
+          <IconButton onClick={handleClose}>
+            <MdClose style={{ color: "red", fontSize: "1.5rem" }} />
+          </IconButton>
+        </Box>
+
+        {/* Form Fields */}
+        <Box sx={{ mt: 2 }}>
+          <TextField
+            label="Name*"
+            placeholder="Enter Your Name"
+            fullWidth
+            margin="normal"
+            variant="outlined"
+          />
+          <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+            <Select defaultValue="India" sx={{ width: "30%" }}>
+              <MenuItem value="India">India</MenuItem>
+              <MenuItem value="USA">USA</MenuItem>
+            </Select>
+            <TextField
+              label="Mobile Number*"
+              placeholder="xxxx xxxxx"
+              fullWidth
+              margin="normal"
+              variant="outlined"
+            />
+          </Box>
+          <TextField
+            label="Source"
+            placeholder="Source"
+            fullWidth
+            margin="normal"
+            variant="outlined"
+          />
+          <TextField
+            label="Tags"
+            placeholder="Give some Tags"
+            fullWidth
+            margin="normal"
+            variant="outlined"
+          />
+        </Box>
+
+        {/* Add Contact Button */}
+        <Button
+          variant="contained"
+          color="success"
+          fullWidth
+          sx={{ mt: 3, textTransform: "none", fontWeight: "600" }}
+        >
+          + Add Contact
+        </Button>
       </Box>
     </Modal>
   );
 }
-function ImportCsv({
+
+function ImportCSVModal({
   open,
   handleClose,
 }: {
@@ -117,19 +145,37 @@ function ImportCsv({
   handleClose: () => void;
 }) {
   return (
-    <Modal
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box sx={style}>
-        <Typography id="modal-modal-title" variant="h6" component="h2">
-          Text in a modal
-        </Typography>
-        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-        </Typography>
+    <Modal open={open} onClose={handleClose}>
+      <Box sx={modalStyle}>
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography variant="h6" component="h2" sx={{ fontWeight: "600" }}>
+            Import CSV
+          </Typography>
+          <IconButton onClick={handleClose}>
+            <MdClose style={{ color: "red", fontSize: "1.5rem" }} />
+          </IconButton>
+        </Box>
+
+        {/* Form Fields */}
+        <Box sx={{ mt: 2 }}>
+          <Typography sx={{ mb: 2 }}>
+            Select the CSV file that you want to import.
+          </Typography>
+          <Button variant="outlined" component="label" fullWidth>
+            Upload CSV File
+            <input type="file" hidden />
+          </Button>
+        </Box>
+
+        {/* Import CSV Button */}
+        <Button
+          variant="contained"
+          color="success"
+          fullWidth
+          sx={{ mt: 3, textTransform: "none", fontWeight: "600" }}
+        >
+          Import
+        </Button>
       </Box>
     </Modal>
   );
@@ -141,6 +187,7 @@ const ContactUs = () => {
     modalName: "",
     open: false,
   });
+
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
       const newSelecteds = rows.map((row) => row.id);
@@ -193,26 +240,48 @@ const ContactUs = () => {
           Broadcast Your Message
         </Typography>
         <div className="flex items-center gap-2">
-          <button
+          <Button
             onClick={() => handleModalClick("broadcast")}
-            className="font-[600] text-[1rem] bg-[#047857] text-white px-4 py-1 rounded-sm"
+            variant="contained"
+            sx={{
+              backgroundColor: "#047857",
+              fontWeight: "600",
+              textTransform: "none",
+              padding: "6px 16px",
+            }}
           >
             Broadcast
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={() => handleModalClick("add_contact")}
-            className="border-[1.5px] border-[#008069] font-[600] text-[1rem] px-4 py-1 rounded-sm text-[#008069]"
+            variant="outlined"
+            sx={{
+              borderColor: "#008069",
+              color: "#008069",
+              fontWeight: "600",
+              textTransform: "none",
+              padding: "6px 16px",
+            }}
           >
-            Add Contact
-          </button>
-          <button
+            + Add Contact
+          </Button>
+          <Button
             onClick={() => handleModalClick("import_csv")}
-            className="border-[1.5px] border-[#008069] font-[600] text-[1rem] px-4 py-1 rounded-sm text-[#008069]"
+            variant="outlined"
+            sx={{
+              borderColor: "#008069",
+              color: "#008069",
+              fontWeight: "600",
+              textTransform: "none",
+              padding: "6px 16px",
+            }}
           >
             Import CSV
-          </button>
+          </Button>
         </div>
       </div>
+
+      {/* Search and Filter Section */}
       <div className="w-full flex justify-between items-center bg-[#F7F8F9] rounded-sm p-3 mt-6">
         <div className="relative">
           <input
@@ -222,12 +291,13 @@ const ContactUs = () => {
           />
           <FiSearch className="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-500" />
         </div>
-
         <button className="flex gap-2 justify-around items-center font-[600] border-[1.5px] text-[1rem]  text-[#64748B] bg-white border-[#E7EAEE] px-4 py-1 rounded-md">
           <CiFilter style={{ fontSize: "1rem", fontWeight: "bold" }} />
           Filter
         </button>
       </div>
+
+      {/* Table */}
       <TableContainer sx={{ mt: 4 }}>
         <Table>
           <TableHead>
@@ -239,28 +309,17 @@ const ContactUs = () => {
                   }
                   checked={rows.length > 0 && selected.length === rows.length}
                   onChange={handleSelectAllClick}
-                  inputProps={{ "aria-label": "select all rows" }}
                 />
               </TableCell>
-              <TableCell>
-                <TableSortLabel>Name</TableSortLabel>
-              </TableCell>
-              <TableCell>
-                <TableSortLabel>Mobile No</TableSortLabel>
-              </TableCell>
-              <TableCell>
-                <TableSortLabel>Source</TableSortLabel>
-              </TableCell>
-              <TableCell>
-                <TableSortLabel>Tags</TableSortLabel>
-              </TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Mobile Number</TableCell>
+              <TableCell>Source</TableCell>
+              <TableCell>Tags</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.map((row) => {
               const isItemSelected = isSelected(row.id);
-              const labelId = `enhanced-table-checkbox-${row.id}`;
-
               return (
                 <TableRow
                   hover
@@ -272,14 +331,9 @@ const ContactUs = () => {
                   selected={isItemSelected}
                 >
                   <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={isItemSelected}
-                      inputProps={{ "aria-labelledby": labelId }}
-                    />
+                    <Checkbox checked={isItemSelected} />
                   </TableCell>
-                  <TableCell component="th" id={labelId} scope="row">
-                    {row.name}
-                  </TableCell>
+                  <TableCell>{row.name}</TableCell>
                   <TableCell>{row.mobileNo}</TableCell>
                   <TableCell>{row.source}</TableCell>
                   <TableCell>{row.tags}</TableCell>
@@ -289,24 +343,16 @@ const ContactUs = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      {open.modalName === "broadcast" && (
-        <BroadcastModal
-          open={open.open}
-          handleClose={() => setOpen({ modalName: "", open: false })}
-        />
-      )}
-      {open.modalName === "add_contact" && (
-        <AddContact
-          open={open.open}
-          handleClose={() => setOpen({ modalName: "", open: false })}
-        />
-      )}
-      {open.modalName === "import_csv" && (
-        <ImportCsv
-          open={open.open}
-          handleClose={() => setOpen({ modalName: "", open: false })}
-        />
-      )}
+
+      {/* Modals */}
+      <AddContact
+        open={open.modalName === "add_contact" && open.open}
+        handleClose={() => setOpen({ modalName: "", open: false })}
+      />
+      <ImportCSVModal
+        open={open.modalName === "import_csv" && open.open}
+        handleClose={() => setOpen({ modalName: "", open: false })}
+      />
     </div>
   );
 };
