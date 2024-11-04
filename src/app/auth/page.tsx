@@ -22,7 +22,7 @@ import { useForm } from "react-hook-form";
 import SignUp from "@/components/auth/signup";
 import SignIn from "@/components/auth/signin";
 
-export default function auth() {
+export default function Auth() {
   const [isSignUp, setIsSignUp] = useState(false);
 
   return (
