@@ -54,7 +54,6 @@ export default function DashboardLayout({
   const handleModalOpen = () => setModalOpen(true);
   const handleModalClose = () => setModalOpen(false);
 
-  // Find the current page title based on the route
   const currentPageTitle =
     sliderData.find((item) => pathName.startsWith(item.route))?.headline ||
     "Dashboard";
@@ -207,35 +206,7 @@ export default function DashboardLayout({
 
           {/* Main Content */}
           <Box sx={{ width: "100%", marginLeft: !open ? "6%" : "15%" }}>
-            {/* Top Bar with Dynamic Title */}
-            <Box
-              sx={{
-                backgroundColor: "#FFFFFF",
-                width: "100%",
-                height: "7%",
-                position: "fixed",
-                top: 0,
-                zIndex: 999,
-                padding: "2%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "left",
-              }}
-            >
-              <IconButton
-                onClick={handleModalOpen}
-                sx={{ display: "flex", alignItems: "center", gap: "10px" }}
-              >
-                <Image
-                  src={arrow}
-                  alt="arrow"
-                  style={{ width: "14px", height: "16px", marginLeft: "10px" }}
-                />
-              </IconButton>
-              <Typography className="left-0 text-[#008069] font-semibold text-[20px]">
-                {currentPageTitle}
-              </Typography>
-            </Box>
+           
             <Box
               sx={{
                 height: "100vh",
@@ -250,7 +221,7 @@ export default function DashboardLayout({
       </Box>
 
       {/* Modal Component */}
-      <Modal
+      {/* <Modal
         open={modalOpen}
         onClose={handleModalClose}
         aria-labelledby="modal-title"
@@ -300,7 +271,7 @@ export default function DashboardLayout({
             </Button>
           </Box>
         </Box>
-      </Modal>
+      </Modal> */}
     </div>
   );
 }
