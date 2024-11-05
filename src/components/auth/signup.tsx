@@ -12,19 +12,22 @@ import {
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-
+import { Controller, useForm } from "react-hook-form";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 interface formData {
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
-  wNumber: number;
+  countryCode: string;
+  phoneNumber: number;
 }
 
 const labelText = {
   fontSize: {
     xl: "1rem",
-    lg: "1rem",
+    lg: "0.8rem",
     md: "0.8rem",
     sm: "0.5rem",
     xs: "0.5rem",
@@ -34,6 +37,17 @@ const labelText = {
   textAlign: "left",
 };
 
+
+const textFieldStyle ={
+  height: {
+    xl:"3.5rem",
+    lg:"2rem",
+    md:"3rem",
+    sm:"2.6rem",
+    xs:"2.6rem",
+  }
+}
+
 export default function SignUp() {
   const [showCreatePassword, setShowCreatePassword] = useState(false);
   const [showConfPassword, setShowConfPassword] = useState(false);
@@ -42,6 +56,7 @@ export default function SignUp() {
     register,
     handleSubmit,
     watch,
+    control,
     reset,
     formState: { errors },
   } = useForm<formData>();
@@ -98,20 +113,37 @@ export default function SignUp() {
         </Typography>
       </Box>
       <form onSubmit={handleSubmit(handleFormSubmit)}>
-        <Box sx={{ mt: 1, ...labelText }}>
-          <Typography
-            className="text-left  text-[#666666] "
-            sx={{ mb: "2%", ...labelText }}
-          >
-            Name
-          </Typography>
-          <TextField
-            variant="outlined"
-            {...register("name", { required: true })}
-            fullWidth
-            type="text"
-            sx={{ height: "56px" }}
-          />
+        <Box sx={{ display: "flex", mt: 1, gap: 1 }}>
+          <Box sx={{ mt: 1, ...labelText }}>
+            <Typography
+              className="text-left  text-[#666666] "
+              sx={{ mb: "2%", ...labelText }}
+            >
+              First Name*
+            </Typography>
+            <TextField
+              variant="outlined"
+              {...register("firstName", { required: true })}
+              fullWidth
+              type="text"
+              sx={{ ...textFieldStyle }}
+            />
+          </Box>
+          <Box sx={{ mt: 1, ...labelText }}>
+            <Typography
+              className="text-left  text-[#666666] "
+              sx={{ mb: "2%", ...labelText }}
+            >
+              Last Name
+            </Typography>
+            <TextField
+              variant="outlined"
+              {...register("lastName", { required: true })}
+              fullWidth
+              type="text"
+              sx={{ ...textFieldStyle }}
+            />
+          </Box>
         </Box>
         <Box sx={{ mt: 1, ...labelText }}>
           <Typography sx={{ mb: "2%", ...labelText }}>Email</Typography>
@@ -120,21 +152,54 @@ export default function SignUp() {
             fullWidth
             type="email"
             {...register("email", { required: true })}
-            sx={{ height: "56px" }}
+            sx={{ ...textFieldStyle }}
           />
         </Box>
-        <Box sx={{ mt: 1, ...labelText }}>
-          <Typography sx={{ mb: "2%", ...labelText }}>
-            Personal Whatsapp Number
-          </Typography>
-          <TextField
-            variant="outlined"
-            fullWidth
-            type="text"
-            {...register("wNumber", { required: true })}
-            sx={{ height: "56px" }}
-          />
+        <Box sx={{ display: "flex", gap: 1 }}>
+          <Box sx={{ mt: 1, ...labelText }}>
+            <Typography sx={{ mb: "2%", ...labelText }}>
+              Country code*
+            </Typography>
+            <Controller
+              name="countryCode"
+              control={control}
+              defaultValue="+91"
+
+              render={({ field }) => (
+                <PhoneInput
+                  {...field}
+                  value={field.value ? String(field.value) : ""}
+                  onChange={(value) => field.onChange(value)}
+                  country={"in"}
+                  countryCodeEditable={false}
+                  buttonStyle={{
+                    backgroundColor: "#FFFF",
+                    transition: "none",
+                    height: "56px",
+                  }}
+                  inputStyle={{
+                    height: "56px",
+                    boxSizing: "border-box",
+                    width: "100%",
+                  }}
+                />
+              )}
+            />
+          </Box>
+          <Box sx={{ mt: 1, ...labelText }}>
+            <Typography sx={{ mb: "2%", ...labelText }}>
+              Personal Whatsapp Number*
+            </Typography>
+            <TextField
+              variant="outlined"
+              fullWidth
+              type="text"
+              {...register("phoneNumber", { required: true })}
+              sx={{ ...textFieldStyle }}
+            />
+          </Box>
         </Box>
+
         <Box sx={{ mt: 1, ...labelText }}>
           <Typography
             sx={{
@@ -149,7 +214,7 @@ export default function SignUp() {
             fullWidth
             sx={{
               "& .MuiOutlinedInput-root": {
-                height: "56px", // Sets the height
+                ...textFieldStyle, // Sets the height
               },
             }}
             variant="outlined"
@@ -193,7 +258,7 @@ export default function SignUp() {
             fullWidth
             sx={{
               "& .MuiOutlinedInput-root": {
-                height: "56px", // Sets the height
+                ...textFieldStyle, // Sets the height
               },
             }}
             variant="outlined"

@@ -21,9 +21,23 @@ import loginImage from "@/public/loginImage.png";
 import { useForm } from "react-hook-form";
 import SignUp from "@/components/auth/signup";
 import SignIn from "@/components/auth/signin";
+import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 
-export default function auth() {
+export default function Auth() {
   const [isSignUp, setIsSignUp] = useState(false);
+
+  const loginUserWithGoogle = useGoogleLogin({
+    onSuccess: (codeResponse) => {
+      // const resData = jwtDecode(codeResponse.access_token);
+      console.log(codeResponse);
+    },
+  });
+
+  const responseFacebook = (response: any) => {
+    console.log(response);
+  };
 
   return (
     <div className="h-screen">
@@ -40,7 +54,6 @@ export default function auth() {
         >
           <Box>
             {isSignUp ? <SignUp /> : <SignIn />}
-
             <Typography
               sx={{
                 fontSize: {
@@ -111,7 +124,6 @@ export default function auth() {
                 style={{ flex: 1, border: "none", borderTop: "2px solid #ccc" }}
               />
             </Box>
-
             <Button
               sx={{
                 borderColor: "#084837",
@@ -124,29 +136,42 @@ export default function auth() {
                 textTransform: "capitalize",
                 gap: 1,
               }}
-              type="submit"
+              onClick={() => loginUserWithGoogle()}
               variant="outlined"
             >
               <Image src={googleLogo} alt="Google" width={20} height={20} />
               Continue with Google
             </Button>
-            <Button
-              sx={{
-                borderColor: "#084837",
-                fontWeight: "bold",
-                color: "#084837",
-                width: "100%",
-                mt: "3%",
-                borderRadius: "20rem",
-                py: "1rem",
-                textTransform: "capitalize",
-                gap: 1,
-              }}
-              variant="outlined"
-            >
-              <Image src={facebookLogo} alt="facebook" width={20} height={20} />
-              Continue with Facebook
-            </Button>
+            {/* <FacebookLogin
+              appId="1276228490177622"
+              autoLoad
+              callback={responseFacebook}
+              render={(renderProps: any) => (
+                <Button
+                  onClick={renderProps.onClick}
+                  sx={{
+                    borderColor: "#084837",
+                    fontWeight: "bold",
+                    color: "#084837",
+                    width: "100%",
+                    mt: "3%",
+                    borderRadius: "20rem",
+                    py: "1rem",
+                    textTransform: "capitalize",
+                    gap: 1,
+                  }}
+                  variant="outlined"
+                >
+                  <Image
+                    src={facebookLogo}
+                    alt="facebook"
+                    width={20}
+                    height={20}
+                  />
+                  Continue with Facebook
+                </Button>
+              )}
+            /> */}
           </Box>
         </Grid>
         <Grid size={7} sx={{ overflow: "hidden" }}>
